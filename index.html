@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <div id="app">
+      <style>
+          .loading{
+              width: 100%;
+              height: calc(100vh - 50px);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+          }
+          .container {
+              width: 200px;
+              height: 200px;
+              position: relative;
+          }
+          .container::before {
+                 content: '';
+                 width: 80px;
+                 height: 15px;
+                 background: linear-gradient(135deg, #292a3a, #536976);
+                 opacity: 0.7;
+                 position: absolute;
+                 top: 130px;
+                 left: 70px;
+                 border-radius: 50%;
+                 animation: shadow 1s linear infinite;
+             }
+          .container::after {
+                 content: '';
+                 width: 60px;
+                 height: 60px;
+                 background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+                 position: absolute;
+                 top: 65px;
+                 left: 80px;
+                 border-radius: 3px;
+                 animation: animate 1s linear infinite;
+          }
+
+          @keyframes animate {
+              17% {
+                  border-bottom-right-radius: 3px;
+              }
+
+              25% {
+                  transform: translateY(9px) rotate(22.5deg);
+              }
+
+              50% {
+                  transform: translateY(18px) scale(1, .9) rotate(45deg);
+                  border-bottom-right-radius: 40px;
+              }
+
+              75% {
+                  transform: translateY(9px) rotate(67.5deg);
+              }
+
+              100% {
+                  transform: translateY(0) rotate(90deg);
+              }
+          }
+
+          @keyframes shadow {
+
+              0%,
+              100% {
+                  transform: scale(1, 1);
+              }
+
+              50% {
+                  transform: scale(1.2, 1);
+              }
+          }
+      </style>
+        <div class="loading">
+            <div class="container"></div>
+        </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
