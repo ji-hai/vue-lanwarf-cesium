@@ -14,6 +14,8 @@ import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-i
 import UnoCSS from 'unocss/vite'
 import { visualizer } from 'rollup-plugin-visualizer'
 
+// cesium 插件
+import cesium from "vite-plugin-cesium"
 // https://vitejs.dev/config/
 const root = process.cwd()
 
@@ -90,6 +92,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       }),
       UnoCSS(),
       // sveltekit(),
+	  cesium()
     ],
 
     css: {

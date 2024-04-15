@@ -71,6 +71,26 @@ const adminList = [
 			},
 		]
 	},
+	{
+		path: '/cesium',
+		component: '#',
+		redirect: '/cesium',
+		name: 'cesium',
+		meta: {
+			title: 'cesium基本使用',
+			icon: 'carbon:skill-level-advanced'
+		},
+		children: [
+			{
+				path: 'cesiumDemo',
+				name: 'cesiumDemo',
+				component: 'views/Cesium/CesiumDemo',
+				meta: {
+					title: 'cesium基本使用'
+				}
+			},
+		]
+	},
 ]
 
 const testList: string[] = [
