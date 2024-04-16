@@ -91,6 +91,34 @@ const adminList = [
 			},
 		]
 	},
+	{
+		path: '/material',
+		component: '#',
+		redirect: '/material/waveCircleMaterial',
+		name: 'material',
+		meta: {
+			title: '材质',
+			icon: 'carbon:skill-level-advanced'
+		},
+		children: [
+			{
+				path: 'waveCircleMaterial',
+				name: 'waveCircleMaterial',
+				component: 'views/Material/WaveCircleMaterial',
+				meta: {
+					title: '圆形波纹材质'
+				}
+			},
+			{
+				path: 'customMaterialLine',
+				name: 'customMaterialLine',
+				component: 'views/Material/CustomMaterialLine',
+				meta: {
+					title: '流动线条材质'
+				}
+			},
+		]
+	},
 ]
 
 const testList: string[] = [

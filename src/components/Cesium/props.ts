@@ -5,10 +5,6 @@
  *
  * */
 export const cesiumProps = {
-	cesiumAsset: {
-		type: String,
-		required: true
-	},
 	tiandituTk: {
 		type: String,
 		required: true

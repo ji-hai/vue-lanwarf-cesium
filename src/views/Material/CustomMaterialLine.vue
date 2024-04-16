@@ -6,8 +6,7 @@ import { useCesium } from "@/hooks/web/useCesium";
 import * as Cesium from "cesium";
 
 import {
-  CustomMaterialLine,
-  WaveCircleMaterial
+  CustomMaterial
 } from "@/components/Cesium/CesiumMaterialProperty";
 
 const { mapRegister, mapMethods } = useCesium()
@@ -15,45 +14,24 @@ const { mapRegister, mapMethods } = useCesium()
 const {
   getMap,
   cesiumNavigation,
-  reverseCesiumBoundary,
-  addCesiumCluster
 } = mapMethods
 
 defineOptions({
-  name: 'CesiumDemo'
+  name: 'CustomMaterialLine'
 })
 
-let viewer1
 const cesiumLoadCB = (viewer) => {
   cesiumNavigation(viewer)
-  viewer1 = viewer
-  // ====================   将三维球定位到中国   =============================
-  viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 17850000 * 0.01),
-    orientation: {
-      heading :  Cesium.Math.toRadians(350.4202942851978),
-      pitch : Cesium.Math.toRadians(-89.74026687972041),
-      roll : Cesium.Math.toRadians(0.1)
-    },
-    complete: ()=> {
-      // 定位完成之后的回调函数
-      // 聚合
-      // addCesiumCluster(earthquakes)
-    }
-  });
-  // ========================================================================
-
-
   // 添加实体线
   let glowingLine = null
   glowingLine = viewer.entities.add({
     polyline: {
       positions: [
-        Cesium.Cartesian3.fromDegrees(120, 30, 0),
-        Cesium.Cartesian3.fromDegrees(110, 30, 0),
+        Cesium.Cartesian3.fromDegrees(120.5, 30.1, 0),
+        Cesium.Cartesian3.fromDegrees(120.8, 30.2, 0),
       ],
       width: 5,
-      material: new CustomMaterialLine({
+      material: CustomMaterial({
         image: '/src/assets/image/line3.png',
         color: Cesium.Color.RED,
         duration: 2000
@@ -62,11 +40,42 @@ const cesiumLoadCB = (viewer) => {
   });
 
   viewer.flyTo(glowingLine)
+
+  viewer.entities.add({
+    polyline: {
+      positions: [
+        Cesium.Cartesian3.fromDegrees(120.5, 30.1, 0),
+        Cesium.Cartesian3.fromDegrees(120.3, 30.4, 0),
+      ],
+      width: 5,
+      material: CustomMaterial({
+        image: '/src/assets/image/line2.png',
+        color: Cesium.Color.WHITE,
+        duration: 2000
+      }),
+    }
+  });
+
+  viewer.entities.add({
+    polyline: {
+      positions: [
+        Cesium.Cartesian3.fromDegrees(120.5, 30.1, 0),
+        Cesium.Cartesian3.fromDegrees(120.2, 30.5, 0),
+      ],
+      width: 10,
+      material: CustomMaterial({
+        image: '/src/assets/image/line.png',
+        color: Cesium.Color.WHITE,
+        duration: 2000
+      }),
+    }
+  });
+
 }
 </script>
 
 <template>
-  <ContentWrap title="CesiumDemo">
+  <ContentWrap title="流动线条材质">
     <div class="w-[100%] h-[100%]">
       <cesium-component
           @register="mapRegister"

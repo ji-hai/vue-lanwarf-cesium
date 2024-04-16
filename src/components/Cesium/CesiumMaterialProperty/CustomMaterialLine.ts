@@ -1,5 +1,35 @@
 import { defaultValue,defined,createPropertyDescriptor, Event, Material, Color, Property } from 'cesium'
 
+/**
+ *  @description 自定义流动线条材质
+ *  @param {String} options.color 颜色
+ *  @param {Number} options.duration 持续时间
+ *  @param {String} options.image 图片
+ *  @author jh
+ *  @date 2024-04-10
+ *  @use
+ *  CustomMaterial({
+        image: '/src/assets/image/line.png',
+        color: Cesium.Color.WHITE,
+        duration: 2000
+      })
+ * */
+
+// 完整调用方式
+// viewer.entities.add({
+// 	polyline: {
+// 		positions: [
+// 			Cesium.Cartesian3.fromDegrees(120.5, 30.1, 0),
+// 			Cesium.Cartesian3.fromDegrees(120.2, 30.5, 0),
+// 		],
+// 		width: 10,
+// 		material: CustomMaterial({
+// 			image: '/src/assets/image/line.png',
+// 			color: Cesium.Color.WHITE,
+// 			duration: 2000
+// 		}),
+// 	}
+// });
 class PolylineCustomMaterialProperty{
 	
 	declare _definitionChanged: Event;
@@ -38,10 +68,11 @@ class PolylineCustomMaterialProperty{
 	}
 	
 	private init(){
+		Material.PolylineCustomMaterialType = 'PolylineCustomMaterial';
 		// 将定义的材质对象添加到cesium的材质队列中
-		Material._materialCache.addMaterial(PolylineCustomMaterialProperty, {
+		Material._materialCache.addMaterial('PolylineCustomMaterial', {
 			fabric: {
-				type: PolylineCustomMaterialProperty,
+				type: 'PolylineCustomMaterial',
 				uniforms: {
 					color: new Color(1, 0.0, 0.0, 1),
 					image: this.image,
@@ -74,7 +105,7 @@ class PolylineCustomMaterialProperty{
 	
 	private getType(){
 		//@ts-ignore
-		return "PolylineTrailLink";
+		return Material.PolylineCustomMaterialType;
 	}
 	
 	private getValue(time, result){
@@ -128,5 +159,8 @@ Object.defineProperties(PolylineCustomMaterialProperty.prototype, {
 	
 });
 
+const CustomMaterial = (options:object): PolylineCustomMaterialProperty=> {
+	return new PolylineCustomMaterialProperty(options)
+}
 
-export default PolylineCustomMaterialProperty
+export default CustomMaterial

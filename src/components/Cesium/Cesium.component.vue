@@ -16,7 +16,7 @@ const emit = defineEmits(['register'])
 
 const props = defineProps(cesiumProps)
 
-let viewer: module = markRaw({})
+let viewer:any = markRaw({})
 onMounted(()=>{
   // 服务负载子域
   const subdomains = ['0','1','2','3','4','5','6','7'];
@@ -114,6 +114,9 @@ onMounted(()=>{
   // viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
   //   url: 'https://data.marsgis.cn/terrain'
   // })
+
+  // 北京时间
+  viewer.clock.currentTime = Cesium.JulianDate.addHours(Cesium.JulianDate.now(new Date()), 8, new Cesium.JulianDate());
 
   emit('register', viewer)
   props.cesiumLoadCB(viewer)
