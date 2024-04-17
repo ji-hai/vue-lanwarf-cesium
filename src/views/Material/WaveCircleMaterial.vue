@@ -13,7 +13,6 @@ const { mapRegister, mapMethods } = useCesium()
 
 const {
   getMap,
-  cesiumNavigation,
 } = mapMethods
 
 defineOptions({
@@ -21,7 +20,6 @@ defineOptions({
 })
 
 const cesiumLoadCB = (viewer) => {
-  cesiumNavigation(viewer)
   // 添加实体线
   let waveCircle = null
   waveCircle = viewer.entities.add({

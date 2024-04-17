@@ -106,7 +106,7 @@ const adminList = [
 				name: 'waveCircleMaterial',
 				component: 'views/Material/WaveCircleMaterial',
 				meta: {
-					title: '圆形波纹材质'
+					title: '波动圆材质'
 				}
 			},
 			{
@@ -115,6 +115,34 @@ const adminList = [
 				component: 'views/Material/CustomMaterialLine',
 				meta: {
 					title: '流动线条材质'
+				}
+			},
+			{
+				path: 'circleFadeMaterial',
+				name: 'circleFadeMaterial',
+				component: 'views/Material/CircleFadeMaterial',
+				meta: {
+					title: '渐变圆材质'
+				}
+			},
+		]
+	},
+	{
+		path: '/skyBox',
+		component: '#',
+		redirect: '/skyBox',
+		name: 'skyBox',
+		meta: {
+			title: '天空盒',
+			icon: 'carbon:skill-level-advanced'
+		},
+		children: [
+			{
+				path: 'skyBox',
+				name: 'skyBox',
+				component: 'views/SkyBox/SkyBox',
+				meta: {
+					title: '天空盒'
 				}
 			},
 		]

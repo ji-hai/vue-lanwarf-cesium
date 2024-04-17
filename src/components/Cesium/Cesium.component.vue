@@ -116,7 +116,7 @@ onMounted(()=>{
   // })
 
   // 北京时间
-  viewer.clock.currentTime = Cesium.JulianDate.addHours(Cesium.JulianDate.now(new Date()), 8, new Cesium.JulianDate());
+  // viewer.clock.currentTime = Cesium.JulianDate.addHours(Cesium.JulianDate.now(new Date()), 8, new Cesium.JulianDate());
 
   emit('register', viewer)
   props.cesiumLoadCB(viewer)

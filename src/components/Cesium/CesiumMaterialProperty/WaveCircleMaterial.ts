@@ -1,6 +1,6 @@
 import { defaultValue,defined,createPropertyDescriptor, Event, Material, Color, Property } from "cesium";
 /**
- *  @description 自定义圆形波纹材质
+ *  @description 波动圆材质
  *  @param {String} options.color 颜色
  *  @param {Number} options.duration 持续时间
  *  @param {Number} options.count 环数（>0）
