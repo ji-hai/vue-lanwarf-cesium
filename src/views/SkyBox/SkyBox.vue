@@ -20,7 +20,7 @@ defineOptions({
 
 const cesiumLoadCB = (viewer) => {
   viewer.scene.skyBox = CesiumBase.setTwoSkyBox()
-  viewer.scene.postProcessStages = CesiumBase.setDarkEffect()
+  viewer.scene.postProcessStages.add(CesiumBase.setDarkEffect()) 
 }
 </script>
 

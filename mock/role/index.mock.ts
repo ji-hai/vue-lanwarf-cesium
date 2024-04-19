@@ -147,6 +147,26 @@ const adminList = [
 			},
 		]
 	},
+	{
+		path: '/navigator',
+		component: '#',
+		redirect: '/navigator',
+		name: 'navigator',
+		meta: {
+			title: 'navigator',
+			icon: 'carbon:skill-level-advanced'
+		},
+		children: [
+			{
+				path: 'navigator',
+				name: 'navigator',
+				component: 'views/Navigator/Navigator',
+				meta: {
+					title: 'Navigator'
+				}
+			},
+		]
+	},
 ]
 
 const testList: string[] = [
