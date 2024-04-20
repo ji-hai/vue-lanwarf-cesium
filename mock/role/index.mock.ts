@@ -165,6 +165,14 @@ const adminList = [
 					title: 'Navigator'
 				}
 			},
+			{
+				path: 'codeView',
+				name: 'codeView',
+				component: 'views/CodeView/CodeView',
+				meta: {
+					title: 'codeView'
+				}
+			},
 		]
 	},
 ]
