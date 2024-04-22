@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, onUpdated, reactive, ref } from 'vue'
+import { onBeforeUnmount, onMounted, reactive } from 'vue'
 import { ContentWrap } from '@/components/ContentWrap'
 
 const netWork = reactive({
   downlink: '',
   effectiveType: '',
-  rtt: '',
+  rtt: ''
 })
 
 const getNetwork = () => {
-    netWork.downlink = navigator.connection.downlink
-    netWork.effectiveType = navigator.connection.effectiveType
-    netWork.rtt = navigator.connection.rtt
+  netWork.downlink = navigator.connection.downlink
+  netWork.effectiveType = navigator.connection.effectiveType
+  netWork.rtt = navigator.connection.rtt
 }
 onMounted(() => {
   window.addEventListener('online', getNetwork)
@@ -29,21 +29,14 @@ onBeforeUnmount(() => {
 
   window.removeEventListener('offline', getNetwork)
 })
-
 </script>
 
 <template>
   <ContentWrap title="网络状态判断">
-    <div :style="{color: netWork.rtt == '' ? 'red' : ''}">
-      <p>
-      网络状态:{{ netWork.effectiveType }}
-    </p>
-    <p>
-      延迟:{{ netWork.rtt }}ms
-    </p>
-    <p>
-      带宽:{{ netWork.downlink }}m/s
-    </p>
+    <div :style="{ color: netWork.rtt == '' ? 'red' : '' }">
+      <p> 网络状态:{{ netWork.effectiveType }} </p>
+      <p> 延迟:{{ netWork.rtt }}ms </p>
+      <p> 带宽:{{ netWork.downlink }}m/s </p>
     </div>
   </ContentWrap>
 </template>

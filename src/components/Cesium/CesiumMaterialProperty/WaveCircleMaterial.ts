@@ -1,4 +1,12 @@
-import { defaultValue,defined,createPropertyDescriptor, Event, Material, Color, Property } from "cesium";
+import {
+  defaultValue,
+  defined,
+  createPropertyDescriptor,
+  Event,
+  Material,
+  Color,
+  Property
+} from 'cesium'
 /**
  *  @description 波动圆材质
  *  @param {String} options.color 颜色
@@ -38,87 +46,81 @@ import { defaultValue,defined,createPropertyDescriptor, Event, Material, Color, 
 // })
 
 class CircleWaveMaterialProperty {
-	
-	declare _definitionChanged: Event;
-	
-	declare _color: undefined;
-	
-	declare _colorSubscription: undefined;
-	
-	declare color: string;
-	
-	declare duration: number;
-	
-	declare count: number;
-	
-	declare gradient: number;
-	
-	declare _time: any;
-	
-	// 存储单例
-	private static instance;
-	
-	// 单例模式调用方式
-	static getInstance(options) {
-		if (!defined(CircleWaveMaterialProperty.instance)) {
-			CircleWaveMaterialProperty.instance = new CircleWaveMaterialProperty(options)
-		}
-		return CircleWaveMaterialProperty.instance
-	}
-	
-	constructor(options) {
-		//@ts-ignore
-		options = defaultValue(options, defaultValue.EMPTY_OBJECT);
-		
-		this._definitionChanged = new Event();
-		
-		this._color = undefined;
-		
-		this._colorSubscription = undefined;
-		
-		this.color = options.color;
-		
-		this.duration = defaultValue(options.duration, 1e3);
-		
-		this.count = defaultValue(options.count, 2);
-		
-		if (this.count <= 0) this.count = 1;
-		
-		this.gradient = defaultValue(options.gradient, 0.1);
-		
-		if (this.gradient < 0) this.gradient = 0;
-		
-		else if (this.gradient > 1) this.gradient = 1;
-		
-		this._time = performance.now();
-		
-		this.init()
-	}
-	
-	private init(){
-		//@ts-ignore
-		Material.CircleWaveMaterialType = 'CircleWaveMaterial';
-		
-		//@ts-ignore
-		Material._materialCache.addMaterial('CircleWaveMaterial', {
-			
-			fabric: {
-				
-				type: "CircleWaveMaterial",
-				
-				uniforms: {
-					
-					color: new Color(1.0, 0.0, 0.0, 1.0),
-					
-					time: 1,
-					
-					count: 1,
-					
-					gradient: 0.1
-					
-				},
-				
-				source: `czm_material czm_getMaterial(czm_materialInput materialInput)
+  declare _definitionChanged: Event
+
+  declare _color: undefined
+
+  declare _colorSubscription: undefined
+
+  declare color: string
+
+  declare duration: number
+
+  declare count: number
+
+  declare gradient: number
+
+  declare _time: any
+
+  // 存储单例
+  private static instance
+
+  // 单例模式调用方式
+  static getInstance(options) {
+    if (!defined(CircleWaveMaterialProperty.instance)) {
+      CircleWaveMaterialProperty.instance = new CircleWaveMaterialProperty(options)
+    }
+    return CircleWaveMaterialProperty.instance
+  }
+
+  constructor(options) {
+    //@ts-ignore
+    options = defaultValue(options, defaultValue.EMPTY_OBJECT)
+
+    this._definitionChanged = new Event()
+
+    this._color = undefined
+
+    this._colorSubscription = undefined
+
+    this.color = options.color
+
+    this.duration = defaultValue(options.duration, 1e3)
+
+    this.count = defaultValue(options.count, 2)
+
+    if (this.count <= 0) this.count = 1
+
+    this.gradient = defaultValue(options.gradient, 0.1)
+
+    if (this.gradient < 0) this.gradient = 0
+    else if (this.gradient > 1) this.gradient = 1
+
+    this._time = performance.now()
+
+    this.init()
+  }
+
+  private init() {
+    //@ts-ignore
+    Material.CircleWaveMaterialType = 'CircleWaveMaterial'
+
+    //@ts-ignore
+    Material._materialCache.addMaterial('CircleWaveMaterial', {
+      fabric: {
+        type: 'CircleWaveMaterial',
+
+        uniforms: {
+          color: new Color(1.0, 0.0, 0.0, 1.0),
+
+          time: 1,
+
+          count: 1,
+
+          gradient: 0.1
+        },
+
+        source: `czm_material czm_getMaterial(czm_materialInput materialInput)
  
                                         {
  
@@ -185,72 +187,59 @@ class CircleWaveMaterialProperty {
                                         return material;
  
                                     }`
-				
-			},
-			
-			translucent: function(material) {
-				
-				return !0;
-				
-			}
-			
-		})
-	}
-	
-	private getType(){
-		//@ts-ignore
-		return Material.CircleWaveMaterialType;
-	}
-	
-	private getValue(time, result){
-		if (!defined(result)) {
-			
-			result = {};
-			
-		}
-		
-		//@ts-ignore
-		result.color = Property.getValueOrClonedDefault(this._color, time, Color.WHITE, result.color);
-		
-		result.time = (performance.now() - this._time) / this.duration;
-		
-		result.count = this.count;
-		
-		result.gradient = 1 + 10 * (1 - this.gradient);
-		
-		return result;
-	}
-	
-	private equals(other){
-		//@ts-ignore
-		return this === other ||
-			
-			(other instanceof CircleWaveMaterialProperty &&
-				
-				Property.equals(this._color, other._color))
-	}
-	
-	get isDestroyed() {
-		
-		return false;
-		
-	}
-	
-	get definitionChanged(){
-		
-		return this._definitionChanged;
-		
-	}
+      },
+
+      translucent: function (material) {
+        return !0
+      }
+    })
+  }
+
+  private getType() {
+    //@ts-ignore
+    return Material.CircleWaveMaterialType
+  }
+
+  private getValue(time, result) {
+    if (!defined(result)) {
+      result = {}
+    }
+
+    //@ts-ignore
+    result.color = Property.getValueOrClonedDefault(this._color, time, Color.WHITE, result.color)
+
+    result.time = (performance.now() - this._time) / this.duration
+
+    result.count = this.count
+
+    result.gradient = 1 + 10 * (1 - this.gradient)
+
+    return result
+  }
+
+  private equals(other) {
+    //@ts-ignore
+    return (
+      this === other ||
+      (other instanceof CircleWaveMaterialProperty && Property.equals(this._color, other._color))
+    )
+  }
+
+  get isDestroyed() {
+    return false
+  }
+
+  get definitionChanged() {
+    return this._definitionChanged
+  }
 }
 
 Object.defineProperties(CircleWaveMaterialProperty.prototype, {
-	
-	color: createPropertyDescriptor('color')
-	
-});
+  color: createPropertyDescriptor('color')
+})
 
-const WaveCircleMaterial = (options:object): CircleWaveMaterialProperty=> {
-	return new CircleWaveMaterialProperty(options)
+const WaveCircleMaterial = (options: object): CircleWaveMaterialProperty => {
+  return new CircleWaveMaterialProperty(options)
 }
 
 export default WaveCircleMaterial

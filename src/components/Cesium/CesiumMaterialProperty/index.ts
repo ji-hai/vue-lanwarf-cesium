@@ -1,12 +1,7 @@
-import CustomMaterial from "./CustomMaterialLine";
+import CustomMaterial from './CustomMaterialLine'
 
-import WaveCircleMaterial from "./WaveCircleMaterial";
+import WaveCircleMaterial from './WaveCircleMaterial'
 
-import CircleFadeMaterial from "./CircleFadeMaterial";
+import CircleFadeMaterial from './CircleFadeMaterial'
 
-
-export {
-	CustomMaterial,
-	WaveCircleMaterial,
-	CircleFadeMaterial
-}
+export { CustomMaterial, WaveCircleMaterial, CircleFadeMaterial }
