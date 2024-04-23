@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, reactive } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { ContentWrap } from '@/components/ContentWrap'
-
+import { ElInput } from 'element-plus'
 const netWork = reactive({
   downlink: '',
   effectiveType: '',
@@ -20,7 +20,11 @@ onMounted(() => {
 
   window.addEventListener('offline', getNetwork)
   getNetwork()
+
 })
+
+const username = ref('')
+
 
 onBeforeUnmount(() => {
   window.removeEventListener('online', getNetwork)
