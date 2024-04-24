@@ -5,61 +5,89 @@ const timeout = 1000
 
 const adminList = [
   {
-    path: '/level',
+    path: '/cesium',
     component: '#',
-    redirect: '/level/menu1/menu1-1/menu1-1-1',
-    name: 'Level',
+    redirect: '/cesium/basic/widget/skyBox',
+    name: 'cesium',
     meta: {
-      title: 'router.level',
+      title: 'cesium',
       icon: 'carbon:skill-level-advanced'
     },
     children: [
       {
-        path: 'menu1',
-        name: 'Menu1',
+        path: 'basic',
+        name: 'basic',
         component: '##',
-        redirect: '/level/menu1/menu1-1/menu1-1-1',
+        redirect: '/cesium/basic/widget/widget1',
         meta: {
-          title: 'router.menu1'
+          title: 'cesium基础'
         },
         children: [
           {
-            path: 'menu1-1',
-            name: 'Menu11',
+            path: 'widget',
+            name: 'widget',
             component: '##',
-            redirect: '/level/menu1/menu1-1/menu1-1-1',
+            redirect: '/cesium/basic/widget/widget1',
             meta: {
-              title: 'router.menu11',
+              title: '控件',
               alwaysShow: true
             },
             children: [
               {
-                path: 'menu1-1-1',
-                name: 'Menu111',
-                component: 'views/Level/Menu111.vue',
+                path: 'widget1',
+                name: 'widget1',
+                component: 'views/Cesium/Widget.vue',
                 meta: {
-                  title: 'router.menu111'
+                  title: 'widget1'
+                }
+              },
+              {
+                path: 'skyBox',
+                name: 'skyBox',
+                component: 'views/SkyBox/SkyBox',
+                meta: {
+                  title: '天空盒'
                 }
               }
             ]
           },
           {
-            path: 'menu1-2',
-            name: 'Menu12',
-            component: 'views/Level/Menu12.vue',
+            path: 'widget',
+            name: 'widget',
+            component: '##',
+            redirect: '/cesium/basic/widget/widget1',
             meta: {
-              title: 'router.menu12'
-            }
-          }
+              title: '控件',
+              alwaysShow: true
+            },
+            children: [
+              {
+                path: 'widget1',
+                name: 'widget1',
+                component: 'views/Cesium/Widget.vue',
+                meta: {
+                  title: 'widget1'
+                }
+              },
+              {
+                path: 'skyBox',
+                name: 'skyBox',
+                component: 'views/SkyBox/SkyBox',
+                meta: {
+                  title: '天空盒'
+                }
+              }
+            ]
+          },
+          // {
+          //   path: 'skyBox',
+          //   name: 'skyBox',
+          //   component: 'views/SkyBox/SkyBox',
+          //   meta: {
+          //     title: '天空盒'
+          //   }
+          // }
         ]
-      },
-      {
-        path: 'menu2',
-        name: 'Menu2',
-        component: 'views/Level/Menu2.vue',
-        meta: {
-          title: 'router.menu2'
-        }
       }
     ]
   },
@@ -131,26 +159,6 @@ const adminList = [
     ]
   },
   {
-    path: '/cesium',
-    component: '#',
-    redirect: '/cesium',
-    name: 'cesium',
-    meta: {
-      title: 'cesium基本使用',
-      icon: 'carbon:skill-level-advanced'
-    },
-    children: [
-      {
-        path: 'cesiumDemo',
-        name: 'cesiumDemo',
-        component: 'views/Cesium/CesiumDemo',
-        meta: {
-          title: 'cesium基本使用'
-        }
-      }
-    ]
-  },
-  {
     path: '/material',
     component: '#',
     redirect: '/material/waveCircleMaterial',
@@ -182,26 +190,6 @@ const adminList = [
         component: 'views/Material/CircleFadeMaterial',
         meta: {
           title: '渐变圆材质'
-        }
-      }
-    ]
-  },
-  {
-    path: '/skyBox',
-    component: '#',
-    redirect: '/skyBox',
-    name: 'skyBox',
-    meta: {
-      title: '天空盒',
-      icon: 'carbon:skill-level-advanced'
-    },
-    children: [
-      {
-        path: 'skyBox',
-        name: 'skyBox',
-        component: 'views/SkyBox/SkyBox',
-        meta: {
-          title: '天空盒'
         }
       }
     ]

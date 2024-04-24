@@ -7,6 +7,7 @@ import {
 } from '../CesiumBase'
 
 import { CircleFadeMaterial } from '../CesiumMaterialProperty'
+import { fa } from '@faker-js/faker'
 
 class CesiumGraphics {
   declare viewer: any
@@ -32,232 +33,290 @@ class CesiumGraphics {
   }
 
   //点
-  private getPointGraphics(options) {
-    options = options || {}
-
-    if (options) {
-      return new Cesium.PointGraphics({
-        color: options.color || Cesium.Color.GREEN,
-        pixelSize: options.pixelSize || 5,
-        outlineColor: options.outlineColor || Cesium.Color.WHITE,
-        outlineWidth: options.outlineWidth || 1,
-        ...options
-      })
-    }
+  private getPointGraphics({
+    color = Cesium.Color.GREEN,
+    pixelSize = 5,
+    outlineColor = Cesium.Color.WHITE,
+    outlineWidth = 1,
+    ...args
+  } = {}) {
+    return new Cesium.PointGraphics(
+      Object.assign({ color, pixelSize, outlineColor, outlineWidth }, args)
+    )
   }
 
   //线
-  private getLineGraphics(options) {
-    options = options || {}
-    if (options && options.positions) {
-      return new Cesium.PolylineGraphics({
-        show: true,
-        positions: options.positions,
-        material: options.material || Cesium.Color.YELLOW,
-        width: options.width || 1,
-        clampToGround: options.clampToGround || false,
-        ...options
-      })
-    }
+  private getLineGraphics({
+    show = true,
+    material = Cesium.Color.YELLOW,
+    width = 1,
+    clampToGround = false,
+    ...args
+  } = {}) {
+    return new Cesium.PolylineGraphics(
+      Object.assign({ show, material, width, clampToGround }, args)
+    )
   }
 
   // 面
-  private getPolygonGraphics(options) {
-    options = options || {}
-    if (options && options.positions) {
-      return new Cesium.PolygonGraphics({
-        hierarchy: { positions: options.positions },
-        material: options.material || Cesium.Color.RED.withAlpha(0.2),
-        clampToGround: options.clampToGround || false,
-        ...options
-      })
-    }
+  private getPolygonGraphics({
+    material = Cesium.Color.RED.withAlpha(0.2),
+    clampToGround = false,
+    positions = [],
+    ...args
+  } = {}) {
+    return new Cesium.PolygonGraphics(
+      Object.assign({ material, clampToGround, hierarchy: positions }, args)
+    )
   }
 
   //标签
-  private getLabelGraphics(options) {
-    options = options || {}
-    if (options && options.text) {
-      return new Cesium.LabelGraphics({
-        //文字标签
-        text: options.text,
-        font: options.font || '14px sans-serif',
-        fillColor: options.fillColor || Cesium.Color.GOLD,
-        style: options.style || Cesium.LabelStyle.FILL_AND_OUTLINE,
-        outlineWidth: options.outlineWidth || 2,
-        showBackground: options.showBackground || false,
-        backgroundColor: options.backgroundColor || new Cesium.Color(0.165, 0.165, 0.165, 0.8),
-        verticalOrigin: options.verticalOrigin || Cesium.VerticalOrigin.BOTTOM,
-        pixelOffset: options.pixelOffset || new Cesium.Cartesian2(0, -30)
-        //heightReference:Cesium.HeightReference.RELATIVE_TO_GROUND
-      })
-    }
+  private getLabelGraphics({
+    text = '标签',
+    font = '14px sans-serif',
+    fillColor = Cesium.Color.GOLD,
+    style = Cesium.LabelStyle.FILL_AND_OUTLINE,
+    outlineWidth = 2,
+    showBackground = false,
+    backgroundColor = new Cesium.Color(0.165, 0.165, 0.165, 0.8),
+    verticalOrigin = Cesium.VerticalOrigin.BOTTOM,
+    pixelOffset = new Cesium.Cartesian2(0, -30),
+    ...args
+  } = {}) {
+    return new Cesium.LabelGraphics(
+      Object.assign(
+        {
+          text,
+          font,
+          fillColor,
+          style,
+          outlineWidth,
+          showBackground,
+          backgroundColor,
+          verticalOrigin,
+          pixelOffset
+        },
+        args
+      )
+    )
   }
 
   //广告牌
-  private getBillboardGraphics(options) {
-    options = options || {}
-    if (options && options.image) {
-      return new Cesium.BillboardGraphics({
-        image: options.image,
-        width: options.width || 35,
-        height: options.height || 35,
-        clampToGround: options.clampToGround || true,
-        scale: options.scale || 1,
-        // eyeOffset :new Cesium.Cartesian2(0, -20),
-        pixelOffset: options.pixelOffset || new Cesium.Cartesian2(0, -20),
-        scaleByDistance: options.scaleByDistance || undefined
-        // heightReference:Cesium.HeightReference.RELATIVE_TO_GROUND
-      })
-    }
+  private getBillboardGraphics({
+    width = 35,
+    height = 35,
+    clampToGround = true,
+    scale = 1,
+    pixelOffset = new Cesium.Cartesian2(0, -20),
+    scaleByDistance = undefined,
+    ...args
+  } = {}) {
+    return new Cesium.BillboardGraphics(
+      Object.assign(
+        {
+          width,
+          height,
+          clampToGround,
+          scale,
+          pixelOffset,
+          scaleByDistance
+        },
+        args
+      )
+    )
   }
 
   //路径
-  private getPathGraphics(options) {
-    options = options || {}
-    if (options) {
-      return new Cesium.PathGraphics({
-        resolution: options.resolution || 1,
-        //设置航线样式，线条颜色，内发光粗细，航线宽度等
-        material: new Cesium.PolylineGlowMaterialProperty({
-          glowPower: options.glowPower || 0.1,
-          color: options.color || Cesium.Color.YELLOW
-        }),
-        width: options.width || 30
-      })
-    }
+  private getPathGraphics({
+    resolution = 1,
+    glowPower = 0.1,
+    color = Cesium.Color.YELLOW,
+    width = 30,
+    ...args
+  } = {}) {
+    return new Cesium.PathGraphics(
+      Object.assign(
+        {
+          resolution,
+          material: new Cesium.PolylineGlowMaterialProperty({
+            glowPower,
+            color
+          }),
+          width
+        },
+        args
+      )
+    )
   }
 
   //模型
-  private getModelGraphics(options) {
-    options = options || {}
-    if (options) {
-      return new Cesium.ModelGraphics({
-        show: true,
-        uri: options.uri,
-        scale: options.scale || 28,
-        minimumPixelSize: options.minimumPixelSize || 30,
-        maximumScale: options.minimumPixelSize || 10000,
-        color: options.color || Cesium.Color.WHITE,
-        ...options
-      })
-    }
+  private getModelGraphics({
+    show = true,
+    uri = '',
+    scale = 1,
+    minimumPixelSize = 1,
+    maximumScale = 10000,
+    color = Cesium.Color.WHITE,
+    ...args
+  } = {}) {
+    return new Cesium.ModelGraphics(
+      Object.assign(
+        {
+          show,
+          uri,
+          scale,
+          minimumPixelSize,
+          maximumScale,
+          color
+        },
+        args
+      )
+    )
   }
 
   //椭圆
-  private getEllipseGraphics(options) {
-    options = options || {}
-    if (options) {
-      return new Cesium.EllipseGraphics({
-        semiMajorAxis: options.semiMajorAxis || 1000000.0,
-        semiMinorAxis: options.semiMinorAxis || 1000000.0,
-        metarial: options.metarial || Cesium.Color.RED.withAlpha(0.5),
-        outline: options.outline || true
-      })
-    }
+  private getEllipseGraphics({
+    semiMajorAxis = 1000000.0, //单位 米
+    semiMinorAxis = 1000000.0, //单位 米
+    metarial = Cesium.Color.RED.withAlpha(0.5),
+    outline = true,
+    ...args
+  } = {}) {
+    return new Cesium.EllipseGraphics(
+      Object.assign({ semiMajorAxis, semiMinorAxis, metarial, outline }, args)
+    )
   }
 
   // 球
-  private getEllipsoidGraphics(options) {
-    options = options || {}
-    if (options) {
-      const r = options.radii || 1000000.0 //默认100公里
-      return new Cesium.EllipsoidGraphics({
-        radii: new Cesium.Cartesian3(r, r, r), //单位 米
-        // innerRadii : options.innerRadii || new Cesium.Cartesian3(r /1.5, r /1.5, r /1.5),
-        maximumCone: options.maximumCone || Cesium.Math.PI_OVER_TWO,
-        stackPartitions: options.stackPartitions || 56,
-        slicePartitions: options.slicePartitions || 56,
-        outlineWidth: options.outlineWidth || 2.0,
-        outlineColor: options.outlineColor || Cesium.Color.YELLOW,
-        outline: options.outline || true,
-        fill: options.fill || true,
-        material: options.material || Cesium.Color.RED.withAlpha(0.1)
-        //heightReference:Cesium.HeightReference.NONE,
-      })
-    }
+  private getEllipsoidGraphics({
+    radii = new Cesium.Cartesian3(1000000.0, 1000000.0, 1000000.0), //单位 米 默认100公里
+    material = Cesium.Color.RED.withAlpha(0.1),
+    outline = true,
+    maximumCone = Cesium.Math.PI_OVER_TWO,
+    stackPartitions = 56,
+    slicePartitions = 56,
+    outlineWidth = 2.0,
+    outlineColor = Cesium.Color.YELLOW,
+    fill = true,
+    ...args
+  } = {}) {
+    return new Cesium.EllipsoidGraphics(
+      Object.assign(
+        {
+          radii,
+          material,
+          outline,
+          maximumCone,
+          stackPartitions,
+          slicePartitions,
+          outlineWidth,
+          outlineColor,
+          fill
+        },
+        args
+      )
+    )
   }
 
   // 面
-  private getPlaneGraphics(options) {
-    options = options || {}
-    if (options) {
-      return new Cesium.PlaneGraphics({
-        plane: options.plane || new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 0.0),
-        dimensions: options.dimensions || new Cesium.Cartesian2(170.0, 130.0),
-        material: options.material || Cesium.Color.BLUE
-      })
-    }
+  private getPlaneGraphics({
+    plane = new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 0.0), //面
+    dimensions = new Cesium.Cartesian2(1000000.0, 1000000.0), //面宽高
+    material = Cesium.Color.BLUE.withAlpha(0.5), //面颜色
+    outline = true, //是否显示外边框
+    outlineColor = Cesium.Color.YELLOW, //外边框颜色
+    ...args
+  } = {}) {
+    return new Cesium.PlaneGraphics(
+      Object.assign(
+        {
+          plane,
+          dimensions,
+          material,
+          outline,
+          outlineColor
+        },
+        args
+      )
+    )
   }
 
   // 锥体
-  private getCylinderGraphics(options) {
-    options = options || {}
-    if (options) {
-      return new Cesium.CylinderGraphics({
-        HeightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
-        length: options.length || 500.0,
-        topRadius: options.topRadius || 500.0,
-        bottomRadius: options.bottomRadius || 0,
-        material: options.material || new Cesium.Color(0, 1, 1, 0.4),
-        slices: options.slices || 128
-      })
-    }
+  private getCylinderGraphics({
+    HeightReference = Cesium.HeightReference.RELATIVE_TO_GROUND,
+    length = 500.0,
+    topRadius = 500.0,
+    bottomRadius = 0.0,
+    material = new Cesium.Color(0, 1, 1, 0.4),
+    slices = 128,
+    ...args
+  } = {}) {
+    return new Cesium.CylinderGraphics(
+      Object.assign(
+        {
+          heightReference: HeightReference,
+          length,
+          topRadius,
+          bottomRadius,
+          material,
+          slices
+        },
+        args
+      )
+    )
   }
 
   // 1. 创建点信息
-  public createPointsGraphics(options) {
-    if (options && options.positions) {
-      const positions = []
-      for (const i in options.positions) {
-        const position = options.positions[i]
-        const entity = this.createGraphics()
-        entity.name = options.name || ''
-        entity.oid = options.oid || 'point'
-        entity.position = position
-        if (options.point) entity.point = this.getPointGraphics(options.point)
-        if (options.billboard) entity.billboard = this.getBillboardGraphics(options.billboard)
-        if (options.label) entity.label = this.getLabelGraphics(options.label)
-        positions.push(this.viewer.entities.add(entity))
-      }
-      return positions
+  public createPointsGraphics({
+    positions = [],
+    name = '',
+    oid = 'point',
+    point = {},
+    billboard = {},
+    label = {}
+  } = {}) {
+    const points = []
+    for (const i in positions) {
+      const position = positions[i]
+      const entity = this.createGraphics()
+      entity.name = name
+      entity.oid = oid
+      entity.position = position
+      if (point) entity.point = this.getPointGraphics(point)
+      if (billboard) entity.billboard = this.getBillboardGraphics(billboard)
+      if (label) entity.label = this.getLabelGraphics(label)
+      points.push(this.viewer.entities.add(entity))
     }
+    return points
   }
 
   // 2. 创建线
-  public createLineGraphics(options) {
-    if (options && options.positions) {
-      const entity = this.createGraphics()
-      entity.name = options.name || ''
-      entity.oid = options.oid || 'line'
-      entity.position = options.positions
-      entity.polyline = this.getLineGraphics(options)
+  public createLineGraphics({ name = '', oid = 'line', positions = [], ...args } = {}) {
+    const entity = this.createGraphics()
+    entity.name = name
+    entity.oid = oid
+    entity.position = positions
+    entity.polyline = this.getLineGraphics(Object.assign({ name, oid, positions }, args))
 
-      return this.viewer.entities.add(entity)
-    }
+    return this.viewer.entities.add(entity)
   }
 
   // 3. 创建面
-  public createPolygonGraphics(options) {
-    options = options || {}
-    if (options) {
-      const entity = this.createGraphics()
-      entity.polygon = this.getPolygonGraphics(options)
-      entity.clampToS3M = options.clampToS3M || false
+  public createPolygonGraphics({ clampToS3M = false, ...args } = {}) {
+    const entity = this.createGraphics()
+    entity.polygon = this.getPolygonGraphics(args)
+    entity.clampToS3M = clampToS3M
 
-      return this.viewer.entities.add(entity)
-    }
+    return this.viewer.entities.add(entity)
   }
 
   // 4. 创建模型
-  public createModelGraphics(options) {
-    if (options && options.position) {
-      const entity = this.createGraphics()
-      entity.model = this.getModelGraphics(options.model)
-      entity.position = options.position
-      entity.orientation = options.orientation
-      return this.viewer.entities.add(entity)
-    }
+  public createModelGraphics({ model, position, orientation }) {
+    const entity = this.createGraphics()
+    entity.model = this.getModelGraphics(model)
+    entity.position = position
+    entity.orientation = orientation
+    return this.viewer.entities.add(entity)
   }
 
   // 创建地面指示

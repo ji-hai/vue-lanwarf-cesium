@@ -27,38 +27,38 @@ const cesiumLoadCB = (viewer) => {
   const Graphics = CesiumGraphics.getInstance(viewer)
 
   //  点
-  // Graphics.createPointsGraphics({
-  //   positions: [Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)],
-  //   point: {
-  //     pixelSize: 10,
-  //     color: Cesium.Color.RED
-  //   },
-  //   billboard: {
-  //     image: '/src/assets/image/img.png'
-  //   },
-  //   label: {
-  //     text: '我是一个点',
-  //     font: '20px sans-serif',
-  //     fillColor: Cesium.Color.RED,
-  //     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-  //     outlineWidth: 2,
-  //     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-  //     pixelOffset: new Cesium.Cartesian2(0, -9)
-  //   }
-  // })
+  Graphics.createPointsGraphics({
+    positions: [Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)],
+    point: {
+      pixelSize: 10,
+      color: Cesium.Color.RED
+    },
+    billboard: {
+      image: '/src/assets/image/img.png'
+    },
+    label: {
+      text: '我是一个点',
+      font: '20px sans-serif',
+      fillColor: Cesium.Color.RED,
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      outlineWidth: 2,
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      pixelOffset: new Cesium.Cartesian2(0, -9)
+    }
+  })
 
-  // // 线
-  // Graphics.createLineGraphics({
-  //   positions: [
-  //     Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0),
-  //     Cesium.Cartesian3.fromDegrees(120.34, 30.25, 0)
-  //   ],
-  //   width: 10,
-  //   material: Cesium.Color.BLUE,
-  //   clampToGround: true
-  // })
+  // 线
+  Graphics.createLineGraphics({
+    positions: [
+      Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0),
+      Cesium.Cartesian3.fromDegrees(120.34, 30.25, 0)
+    ],
+    width: 10,
+    material: Cesium.Color.BLUE,
+    clampToGround: true
+  })
 
-  // // 面
+  // 面
   // Graphics.createPolygonGraphics({
   //   positions: Cesium.Cartesian3.fromDegreesArray([120.0, 30.0, 121.0, 30.0, 120.0, 31.0]),
   //   material: Cesium.Color.BLUE,

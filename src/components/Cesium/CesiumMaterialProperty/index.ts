@@ -4,4 +4,14 @@ import WaveCircleMaterial from './WaveCircleMaterial'
 
 import CircleFadeMaterial from './CircleFadeMaterial'
 
-export { CustomMaterial, WaveCircleMaterial, CircleFadeMaterial }
+import CustomMaterialWall from './CustomMaterialWall'
+
+import DynamicWallMaterialProperty from './DynamicWallMaterialProperty'
+
+export {
+  CustomMaterial,
+  WaveCircleMaterial,
+  CircleFadeMaterial,
+  CustomMaterialWall,
+  DynamicWallMaterialProperty
+}
