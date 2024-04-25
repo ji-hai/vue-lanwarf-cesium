@@ -9,7 +9,7 @@ import {
 } from 'cesium'
 
 /**
- *  @description 自定义流动线条材质
+ *  @description 流动线条材质 单段
  *  @param {String} options.color 颜色
  *  @param {Number} options.duration 持续时间
  *  @param {String} options.image 图片
