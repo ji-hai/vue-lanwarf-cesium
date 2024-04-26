@@ -9,12 +9,15 @@ import {
   CustomMaterial,
   CustomMaterialWall,
   DynamicWallMaterialProperty,
-  PolylineTrailLinkMaterialProperty
+  PolylineTrailLinkMaterialProperty,
+  WaveCircleMaterial
 } from '@/components/Cesium/CesiumMaterialProperty'
 
 const { mapRegister, mapMethods } = useCesium()
 
 const { getMap } = mapMethods
+
+import CesiumGraphics from '@/components/Cesium/CesiumGraphics'
 
 defineOptions({
   name: 'Demo'
@@ -22,6 +25,67 @@ defineOptions({
 
 let entityModel
 const cesiumLoadCB = (viewer) => {
+  const Graphics = CesiumGraphics.getInstance(viewer)
+  //  模型
+  let hpr = new Cesium.HeadingPitchRoll(
+    Cesium.Math.toRadians(0),
+    Cesium.Math.toRadians(0), //0朝下 180朝上
+    Cesium.Math.toRadians(0)
+  )
+  let r = Cesium.Math.toRadians(2)
+  let lon = 120.16907205003166,
+    lat = 30.175928962346774,
+    height = 0,
+    isUp = true
+  Graphics.createModelGraphics({
+    position: new Cesium.CallbackProperty((e) => {
+      // if (height > 400) {
+      //   height = 400
+      //   isUp = false
+      // } else if (height < 350) {
+      //   height = 350
+      //   isUp = true
+      // }
+      // if (isUp) {
+      //   height += 1.0
+      // } else {
+      //   height -= 1.0
+      // }
+
+      return Cesium.Cartesian3.fromDegrees(lon, lat, height)
+    }, false),
+    orientation: new Cesium.CallbackProperty((e) => {
+      hpr.heading += r
+
+      let position = Cesium.Cartesian3.fromDegrees(lon, lat, height)
+      return Cesium.Transforms.headingPitchRollQuaternion(position, hpr)
+    }, false),
+    model: {
+      uri: '/src/assets/SampleData/glb/pyramid.glb',
+      minimumPixelSize: 30,
+      // maximumScale: 200,
+      scale: 0.0001
+    }
+  })
+
+  viewer.entities.add({
+    name: 'ellipse',
+    position: Cesium.Cartesian3.fromDegrees(lon, lat, 5),
+    ellipse: {
+      semiMajorAxis: 30,
+      semiMinorAxis: 30,
+      material: WaveCircleMaterial({
+        duration: 2e3,
+
+        gradient: 0,
+
+        color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
+
+        count: 3
+      })
+    }
+  })
+
   entityModel = new Cesium.Entity({
     position: Cesium.Cartesian3.fromDegrees(120.16907205003166, 30.175928962346774, 0),
     orientation: Cesium.Transforms.headingPitchRollQuaternion(
@@ -35,9 +99,9 @@ const cesiumLoadCB = (viewer) => {
     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
     model: {
       uri: '//data.mars3d.cn/gltf/mars/jingche/jingche.gltf',
-      minimumPixelSize: 100,
-      maximumScale: 500,
-      scale: 0.05,
+      minimumPixelSize: 30,
+      // maximumScale: 200,
+      scale: 0.001,
       show: true
       // 设置显示和隐藏的距离范围
       // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 5000.0)
@@ -45,36 +109,37 @@ const cesiumLoadCB = (viewer) => {
     path: {
       material: Cesium.Color.YELLOW,
       leadTime: 0,
-      trailTime: 360,
+      trailTime: 200,
       width: 3
     }
   })
 
   viewer.entities.add(entityModel)
-  viewer.trackedEntity = entityModel
+  viewer.flyTo(entityModel)
+  // viewer.trackedEntity = entityModel
 
   animation(viewer)
 
-  setTimeout(() => {
-    viewer.entities.remove(entityModel)
+  // setTimeout(() => {
+  //   viewer.entities.remove(entityModel)
 
-    viewer.entities.add({
-      polyline: {
-        positions: [
-          Cesium.Cartesian3.fromDegrees(120.19232557663305, 30.17517782709273, 0),
-          Cesium.Cartesian3.fromDegrees(120.18232557663305, 30.17537782709273, 0),
-          Cesium.Cartesian3.fromDegrees(120.16907205003166, 30.175928962346774, 0)
-        ],
-        width: 10,
-        material: new PolylineTrailLinkMaterialProperty(
-          3000,
-          new Cesium.Color(1, 36, 46),
-          new Cesium.Cartesian2(6.0, 1.0),
-          'src/assets/image/line5.png'
-        )
-      }
-    })
-  }, 1000 * 10)
+  //   viewer.entities.add({
+  //     polyline: {
+  //       positions: [
+  //         Cesium.Cartesian3.fromDegrees(120.19232557663305, 30.17517782709273, 0),
+  //         Cesium.Cartesian3.fromDegrees(120.18232557663305, 30.17537782709273, 0),
+  //         Cesium.Cartesian3.fromDegrees(120.16907205003166, 30.175928962346774, 0)
+  //       ],
+  //       width: 10,
+  //       material: new PolylineTrailLinkMaterialProperty(
+  //         3000,
+  //         new Cesium.Color(1, 36, 46),
+  //         new Cesium.Cartesian2(6.0, 1.0),
+  //         'src/assets/image/line5.png'
+  //       )
+  //     }
+  //   })
+  // }, 1000 * 10)
 }
 
 const computeFlight = (start, source) => {
@@ -97,7 +162,7 @@ const animation = (viewer) => {
   // 起始时间
   let start = Cesium.JulianDate.fromDate(new Date())
   // 结束时间
-  let stop = Cesium.JulianDate.addSeconds(start, 360, new Cesium.JulianDate())
+  let stop = Cesium.JulianDate.addSeconds(start, 200, new Cesium.JulianDate())
   // 设置始时钟始时间
   viewer.clock.startTime = start.clone()
   // 设置时钟当前时间
@@ -105,14 +170,14 @@ const animation = (viewer) => {
   // 设置始终停止时间
   viewer.clock.stopTime = stop.clone()
   // 时间速率，数字越大时间过的越快
-  viewer.clock.multiplier = 20
+  viewer.clock.multiplier = 10
   // 时间轴
   viewer.timeline.zoomTo(start, stop)
   // 循环执行,即为2，到达终止时间，重新从起点时间开始
   // CLAMPED：达到终止时间后停止
   // LOOP_STOP：达到终止时间后重新循环
   // UNBOUNDED：达到终止时间后继续读秒（默认）
-  viewer.clock.clockRange = Cesium.ClockRange.CLAMPED
+  viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP
 
   let availability = new Cesium.TimeIntervalCollection([
     new Cesium.TimeInterval({

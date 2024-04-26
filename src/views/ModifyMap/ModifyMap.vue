@@ -2,6 +2,8 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 
+import gui from '@/plugins/gui'
+
 import { useCesium } from '@/hooks/web/useCesium'
 import * as Cesium from 'cesium'
 
@@ -21,7 +23,7 @@ defineOptions({
 })
 
 const modifyMap = (viewer, options) => {
-  const baseLayer = viewer.imageryLayers.get(1)
+  const baseLayer = viewer.imageryLayers.get(0)
   //以下几个参数根据实际情况修改,目前我是参照火星科技的参数,个人感觉效果还不错
   baseLayer.brightness = options.brightness || 0.6
   baseLayer.contrast = options.contrast || 1.8
@@ -51,6 +53,33 @@ const modifyMap = (viewer, options) => {
 }
 
 const cesiumLoadCB = (viewer) => {
+  gui
+    .addColor(
+      {
+        filterRGB: [7, 47, 109]
+      },
+      'filterRGB'
+    )
+    .onChange((val) => {
+      modifyMap(viewer, {
+        invertColor: false,
+        filterRGB: [parseInt(val[0]), parseInt(val[1]), parseInt(val[2])]
+      })
+    })
+
+  gui
+    .add(
+      {
+        invertColor: false
+      },
+      'invertColor'
+    )
+    .onChange((val) => {
+      // modifyMap(viewer, {
+      //   invertColor: val,
+      //   filterRGB: [125,125,125]
+      // })
+    })
   let startPosition = new Cesium.Cartesian3.fromDegrees(120.14046454, 30.27415039)
   let endPosition = new Cesium.Cartesian3.fromDegrees(120.16701991, 30.27648221)
   let factor = 0
@@ -90,11 +119,6 @@ const cesiumLoadCB = (viewer) => {
     }
   })
   viewer.trackedEntity = vehicleEntity
-
-  modifyMap(viewer, {
-    invertColor: true,
-    filterRGB: [125, 125, 125]
-  })
 }
 </script>
 

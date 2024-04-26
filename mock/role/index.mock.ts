@@ -186,6 +186,34 @@ const adminList = [
         }
       }
     ]
+  },
+  {
+    path: '/test',
+    component: '#',
+    redirect: '/test/test1',
+    name: 'test',
+    meta: {
+      title: 'test',
+      icon: 'carbon:skill-level-advanced'
+    },
+    children: [
+      {
+        path: 'test1',
+        name: 'test1',
+        component: 'views/Test/Test',
+        meta: {
+          title: 'Test'
+        }
+      },
+      {
+        path: 'test2',
+        name: 'test2',
+        component: 'views/CodeView/CodeView',
+        meta: {
+          title: 'test2'
+        }
+      }
+    ]
   }
 ]
 
