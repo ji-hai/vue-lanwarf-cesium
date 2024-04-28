@@ -70,6 +70,7 @@ class CesiumBase {
   }
 
   //场景蓝光
+  //  colorTexture1 不支持
   static setBlurBloom(options) {
     options = options || {}
     const fs =

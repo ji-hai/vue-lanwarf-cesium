@@ -825,6 +825,64 @@ class CesiumGraphics {
       }
     }
   }
+
+  // 报警点位闪烁
+  public createAlarmPoint = (options) => {
+    let x = 1
+    let flog = true
+    this.viewer.entities.add({
+      position: options.position,
+      point: {
+        show: true, // default
+        color: new Cesium.CallbackProperty(function () {
+          if (flog) {
+            x = x - 0.05
+            if (x <= 0) {
+              flog = false
+            }
+          } else {
+            x = x + 0.05
+            if (x >= 1) {
+              flog = true
+            }
+          }
+          return Cesium.Color.RED.withAlpha(x)
+        }, false),
+        pixelSize: 10, // default: 1
+        outlineWidth: 0
+      }
+    })
+  }
+
+  // 报警区域闪烁（圆）
+  public createAlarmCircle = (options) => {
+    let x = 1
+    let flog = true
+    this.viewer.entities.add({
+      position: options.position,
+      ellipse: {
+        semiMinorAxis: options.semiMinorAxis || 100,
+        semiMajorAxis: options.semiMajorAxis || 100,
+        height: 0,
+        material: new Cesium.ColorMaterialProperty(
+          new Cesium.CallbackProperty(function () {
+            if (flog) {
+              x = x - 0.05
+              if (x <= 0) {
+                flog = false
+              }
+            } else {
+              x = x + 0.05
+              if (x >= 1) {
+                flog = true
+              }
+            }
+            return Cesium.Color.RED.withAlpha(x)
+          }, false)
+        )
+      }
+    })
+  }
 }
 
 export default CesiumGraphics
