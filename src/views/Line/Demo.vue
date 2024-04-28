@@ -5,13 +5,7 @@ import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 import { useCesium } from '@/hooks/web/useCesium'
 import * as Cesium from 'cesium'
 
-import {
-  CustomMaterial,
-  CustomMaterialWall,
-  DynamicWallMaterialProperty,
-  PolylineTrailLinkMaterialProperty,
-  WaveCircleMaterial
-} from '@/components/Cesium/CesiumMaterialProperty'
+import { WaveCircleMaterial } from '@/components/Cesium/CesiumMaterialProperty'
 
 const { mapRegister, mapMethods } = useCesium()
 
