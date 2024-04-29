@@ -12,12 +12,13 @@ const { mapRegister, mapMethods } = useCesium()
 const { getMap } = mapMethods
 
 defineOptions({
-  name: 'DivGraphics'
+  name: 'AlarmPoint'
 })
 
+import CesiumGraphics from '@/components/Cesium/CesiumGraphics'
 import { onBeforeMount, onBeforeUnmount } from 'vue'
-import Css3Renderer from '@/components/Cesium/CesiumCss3Renderer'
 
+let cesiumGraphics
 const cesiumLoadCB = (viewer) => {
   // 相机定位
   viewer.camera.setView({
@@ -29,40 +30,17 @@ const cesiumLoadCB = (viewer) => {
     }
   })
 
-  let css3Renderer = new Css3Renderer(
-    viewer,
-    [
-      {
-        id: 'box4',
-        position: [120, 30, 50.0],
-        element: `<div style="position: fixed;top: 0;left: 0;color: red" id="box4">xxx 信息点</div>`,
-        offset: [200, 160]
-      }
-    ],
-    false
-  )
+  cesiumGraphics = new CesiumGraphics(viewer)
 
-  // let css3Renderer = new Css3Renderer(viewer, [], true)
-  // css3Renderer.addEntityLayer({
-  //   id: '',
-  //   position: [120, 30, 30.0], //高度为 boxHeightMax
-  //   element: `<div style="position: fixed;top: 0;" id='div1'>
-  //              <div class='line'></div>
-  //              <h1>22222</h1>
-  //              <div class='main' style="font-size:20px">
-  //                       <div class="" style="color:#ff9800">信息点</div>
-  //                      <div class=""> xx大厦 </div>
-  //               </div>
-  //          </div>`,
-  //   offset: [200, 160],
-  //   boxShow: false,
-  //   circleShow: false
-  // })
+  //  报警点
+  cesiumGraphics.createAlarmPoint({
+    position: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)
+  })
 }
 </script>
 
 <template>
-  <ContentWrap title="DivGraphics">
+  <ContentWrap title="AlarmPoint">
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"

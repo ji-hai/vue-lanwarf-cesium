@@ -9,12 +9,6 @@ import CesiumWind from '/public/js/cesium-wind.esm.js'
 
 import StormField from '/public/js/storm/StormField'
 
-import Prompt from '@/components/Cesium/CesiumPrompt/index'
-
-import CesiumGraphics from '@/components/Cesium/CesiumGraphics'
-
-import { Fireworks } from '@/components/Cesium/CesiumEffects/index'
-
 const { mapRegister, mapMethods } = useCesium()
 
 const { getMap } = mapMethods
@@ -23,10 +17,7 @@ defineOptions({
   name: 'Test'
 })
 
-let viewer1
 const cesiumLoadCB = (viewer) => {
-  const Graphics = new CesiumGraphics(viewer)
-  viewer1 = viewer
   // ====================   将三维球定位到中国   =============================
   // 相机飞行
   viewer.camera.flyTo({
@@ -96,24 +87,6 @@ const cesiumLoadCB = (viewer) => {
 
   stormField.animate()
 
-  new Prompt(viewer, {
-    type: 2,
-    content: '<div style="width: 100px;height: 100px;background: red;">222</div>',
-    position: [120.84, 30.15, 0], // 支持多种形式传参 cartesian3 || array || object
-    close: function () {
-      return false
-    } // 点击关闭按钮的回调函数
-  })
-
-  Graphics.createAlarmCircle({
-    position: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)
-  })
-
-  Graphics.createAlarmPoint({
-    position: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)
-  })
-
-  Fireworks(viewer1)
 }
 </script>
 

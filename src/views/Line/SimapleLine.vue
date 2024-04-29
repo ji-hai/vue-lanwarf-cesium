@@ -270,9 +270,6 @@ const cesiumLoadCB = (viewer) => {
 
 <template>
   <ContentWrap title="简单线">
-    <div>
-      <ElButton>1111</ElButton>
-    </div>
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"

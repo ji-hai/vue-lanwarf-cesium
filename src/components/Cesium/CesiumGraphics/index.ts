@@ -383,8 +383,8 @@ class CesiumGraphics {
       const entity = this.createGraphics()
       entity.position = options.position
       options.material = CircleFadeMaterial({
-        color: options.color || Cesium.Color.fromCssColorString('#00f'),
-        duration: options.duration || 100
+        color: options.color || Cesium.Color.fromCssColorString('#02ff00'),
+        duration: options.duration || 2000
       })
       entity.cylinder = this.getCylinderGraphics(options)
 

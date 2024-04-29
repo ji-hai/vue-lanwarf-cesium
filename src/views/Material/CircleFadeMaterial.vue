@@ -7,6 +7,8 @@ import * as Cesium from 'cesium'
 
 import { CircleFadeMaterial } from '@/components/Cesium/CesiumMaterialProperty'
 
+import CesiumGraphics from '@/components/Cesium/CesiumGraphics'
+
 const { mapRegister, mapMethods } = useCesium()
 
 const { getMap } = mapMethods
@@ -16,21 +18,30 @@ defineOptions({
 })
 
 const cesiumLoadCB = (viewer) => {
+  let cesiumGraphics = new CesiumGraphics(viewer)
+
   // 添加实体
   let waveCircle = null
-  waveCircle = viewer.entities.add({
-    name: 'ellipse',
-    position: Cesium.Cartesian3.fromDegrees(120, 30, 5),
-    ellipse: {
-      semiMajorAxis: 1000,
-      semiMinorAxis: 1000,
-      material: CircleFadeMaterial({
-        duration: 2000,
 
-        color: new Cesium.Color(1.0, 1.0, 0.0)
-      })
-    }
+  waveCircle = cesiumGraphics.createFadeCylinderGraphics({
+    position: Cesium.Cartesian3.fromDegrees(120, 30),
+    length: 700,
+    bottomRadius: 500
   })
+
+  // waveCircle = viewer.entities.add({
+  //   name: 'ellipse',
+  //   position: Cesium.Cartesian3.fromDegrees(120, 30, 5),
+  //   ellipse: {
+  //     semiMajorAxis: 1000,
+  //     semiMinorAxis: 1000,
+  //     material: CircleFadeMaterial({
+  //       duration: 2000,
+
+  //       color: new Cesium.Color(1.0, 1.0, 0.0)
+  //     })
+  //   }
+  // })
 
   viewer.flyTo(waveCircle)
 }

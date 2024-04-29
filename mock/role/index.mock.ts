@@ -88,6 +88,22 @@ const adminList = [
             }
           },
           {
+            path: 'alarmPoint',
+            name: 'alarmPoint',
+            component: 'views/Graphics/AlarmPoint',
+            meta: {
+              title: '报警点'
+            }
+          },
+          {
+            path: 'alarmCircle',
+            name: 'alarmCircle',
+            component: 'views/Graphics/AlarmCircle',
+            meta: {
+              title: '报警圆'
+            }
+          },
+          {
             path: 'lineGraphics',
             name: 'lineGraphics',
             component: 'views/Graphics/LineGraphics',
@@ -134,6 +150,14 @@ const adminList = [
             meta: {
               title: '自定义div'
             }
+          },
+          {
+            path: 'Popup',
+            name: 'Popup',
+            component: 'views/Prompt/Popup',
+            meta: {
+              title: '自定义弹框'
+            }
           }
         ]
       },
@@ -161,6 +185,26 @@ const adminList = [
             component: 'views/Line/SimapleLine',
             meta: {
               title: '简单线'
+            }
+          }
+        ]
+      },
+      {
+        path: 'particle',
+        component: '#',
+        redirect: '/cesium/particle/fireworks',
+        name: 'particle',
+        meta: {
+          title: '粒子',
+          icon: 'carbon:skill-level-advanced'
+        },
+        children: [
+          {
+            path: 'fireworks',
+            name: 'fireworks',
+            component: 'views/Particle/Fireworks',
+            meta: {
+              title: '烟花'
             }
           }
         ]

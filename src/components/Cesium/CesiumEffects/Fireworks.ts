@@ -8,7 +8,7 @@ const Fireworks = (viewer: any) => {
   const scene = viewer.scene
   Cesium.Math.setRandomNumberSeed(315)
   const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
-    Cesium.Cartesian3.fromDegrees(103.84, 31.15)
+    Cesium.Cartesian3.fromDegrees(120.84, 30.15)
   )
   const emitterInitialLocation = new Cesium.Cartesian3(0.0, 0.0, 100.0)
 
