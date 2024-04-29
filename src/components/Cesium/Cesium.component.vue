@@ -8,12 +8,13 @@ import * as Cesium from 'cesium'
 
 import { cesiumProps } from './props'
 import { setEventHandler } from '@/components/Cesium/CesiumEventHandler'
+import { vi } from '@faker-js/faker'
 
 const emit = defineEmits(['register'])
 
 const props = defineProps(cesiumProps)
 
-let viewer: any = markRaw({})
+let viewer
 onMounted(() => {
   // 服务负载子域
   const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7']
@@ -134,7 +135,6 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  viewer.value?.destroy()
-  console.log('已销毁')
+  viewer.destroy()
 })
 </script>

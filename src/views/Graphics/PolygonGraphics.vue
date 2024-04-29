@@ -5,47 +5,44 @@ import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 import { useCesium } from '@/hooks/web/useCesium'
 import * as Cesium from 'cesium'
 
-import {
-  CustomMaterial,
-  CustomMaterialWall,
-  DynamicWallMaterialProperty,
-  PolylineTrailLinkMaterialProperty,
-  HexagonSpread
-} from '@/components/Cesium/CesiumMaterialProperty'
+import { ElButton } from 'element-plus'
 
 const { mapRegister, mapMethods } = useCesium()
 
 const { getMap } = mapMethods
 
 defineOptions({
-  name: 'Hexagon'
+  name: 'PolygonGraphics'
 })
 
+import CesiumGraphics from '@/components/Cesium/CesiumGraphics'
+import { onBeforeMount, onBeforeUnmount } from 'vue'
+
+let cesiumGraphics
 const cesiumLoadCB = (viewer) => {
-  // ====================   将三维球定位到中国   =============================
-  // 相机飞行
+  // 相机定位
   viewer.camera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(120, 30, 5000),
+    destination: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 17850000 * 0.01),
     orientation: {
       heading: Cesium.Math.toRadians(350.4202942851978),
       pitch: Cesium.Math.toRadians(-89.74026687972041),
-      roll: Cesium.Math.toRadians(0.1)
-    },
-    complete: () => {
-      // 定位完成之后的回调函数
-      // 聚合
-      // addCesiumCluster(earthquakes)
+      roll: Cesium.Math.toRadians(0.0)
     }
   })
-  // ========================================================================
-  // 六边形扩散
-  const hexagonSpread1 = new HexagonSpread(viewer, 'hexagonSpred1')
-  hexagonSpread1.add([120, 30, 0], '#0099BF', 1000, 7500)
+
+  cesiumGraphics = new CesiumGraphics(viewer)
+
+  // 面
+  cesiumGraphics.createPolygonGraphics({
+    positions: Cesium.Cartesian3.fromDegreesArray([120.0, 30.0, 121.0, 30.0, 120.0, 31.0]),
+    material: Cesium.Color.BLUE,
+    clampToGround: true
+  })
 }
 </script>
 
 <template>
-  <ContentWrap title="Hexagon">
+  <ContentWrap title="PolygonGraphics">
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"

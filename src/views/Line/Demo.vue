@@ -5,7 +5,10 @@ import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 import { useCesium } from '@/hooks/web/useCesium'
 import * as Cesium from 'cesium'
 
-import { WaveCircleMaterial } from '@/components/Cesium/CesiumMaterialProperty'
+import {
+  WaveCircleMaterial,
+  PolylineTrailLinkMaterialProperty
+} from '@/components/Cesium/CesiumMaterialProperty'
 
 const { mapRegister, mapMethods } = useCesium()
 
@@ -19,7 +22,7 @@ defineOptions({
 
 let entityModel
 const cesiumLoadCB = (viewer) => {
-  const Graphics = CesiumGraphics.getInstance(viewer)
+  const Graphics = new CesiumGraphics(viewer)
   //  模型
   let hpr = new Cesium.HeadingPitchRoll(
     Cesium.Math.toRadians(0),
@@ -114,26 +117,22 @@ const cesiumLoadCB = (viewer) => {
 
   animation(viewer)
 
-  // setTimeout(() => {
-  //   viewer.entities.remove(entityModel)
-
-  //   viewer.entities.add({
-  //     polyline: {
-  //       positions: [
-  //         Cesium.Cartesian3.fromDegrees(120.19232557663305, 30.17517782709273, 0),
-  //         Cesium.Cartesian3.fromDegrees(120.18232557663305, 30.17537782709273, 0),
-  //         Cesium.Cartesian3.fromDegrees(120.16907205003166, 30.175928962346774, 0)
-  //       ],
-  //       width: 10,
-  //       material: new PolylineTrailLinkMaterialProperty(
-  //         3000,
-  //         new Cesium.Color(1, 36, 46),
-  //         new Cesium.Cartesian2(6.0, 1.0),
-  //         'src/assets/image/line5.png'
-  //       )
-  //     }
-  //   })
-  // }, 1000 * 10)
+  viewer.entities.add({
+    polyline: {
+      positions: [
+        Cesium.Cartesian3.fromDegrees(120.19332557663305, 30.18517782709273, 0),
+        Cesium.Cartesian3.fromDegrees(120.18332557663305, 30.18537782709273, 0),
+        Cesium.Cartesian3.fromDegrees(120.17007205003166, 30.185928962346774, 0)
+      ],
+      width: 10,
+      material: new PolylineTrailLinkMaterialProperty(
+        3000,
+        new Cesium.Color(1, 36, 46),
+        new Cesium.Cartesian2(6.0, 1.0),
+        'src/assets/image/line5.png'
+      )
+    }
+  })
 }
 
 const computeFlight = (start, source) => {

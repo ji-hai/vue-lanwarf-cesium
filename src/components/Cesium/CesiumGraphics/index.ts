@@ -7,21 +7,9 @@ import {
 } from '../CesiumBase'
 
 import { CircleFadeMaterial } from '../CesiumMaterialProperty'
-import { fa } from '@faker-js/faker'
 
 class CesiumGraphics {
   declare viewer: any
-
-  // 存储单例
-  private static instance
-
-  // 单例模式调用方式
-  static getInstance(viewer) {
-    if (!Cesium.defined(CesiumGraphics.instance)) {
-      CesiumGraphics.instance = new CesiumGraphics(viewer)
-    }
-    return CesiumGraphics.instance
-  }
 
   constructor(viewer) {
     this.viewer = viewer
@@ -72,7 +60,7 @@ class CesiumGraphics {
 
   //标签
   private getLabelGraphics({
-    text = '标签',
+    text = '',
     font = '14px sans-serif',
     fillColor = Cesium.Color.GOLD,
     style = Cesium.LabelStyle.FILL_AND_OUTLINE,
@@ -578,7 +566,7 @@ class CesiumGraphics {
   public createCustomDefBillboardGraphics(options) {
     if (options && options.position) {
       const $this = this,
-        img = document.createElement('img')
+        img = new Image()
       img.src = options.img || 'src/assets/image/div1.png'
       // 绘制canvas
       function drawCompanyTip(options) {
@@ -597,6 +585,8 @@ class CesiumGraphics {
       img.onload = function () {
         options.image = img
         const entity = $this.viewer.entities.add({
+          name: options.name || null,
+          id: options.id || null,
           position: options.position,
           billboard: {
             image: drawCompanyTip(options),

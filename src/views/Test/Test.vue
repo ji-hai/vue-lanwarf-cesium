@@ -25,7 +25,7 @@ defineOptions({
 
 let viewer1
 const cesiumLoadCB = (viewer) => {
-  const Graphics = CesiumGraphics.getInstance(viewer)
+  const Graphics = new CesiumGraphics(viewer)
   viewer1 = viewer
   // ====================   将三维球定位到中国   =============================
   // 相机飞行

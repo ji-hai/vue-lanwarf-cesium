@@ -72,7 +72,7 @@ const adminList = [
       {
         path: 'graphics',
         component: '#',
-        redirect: '/cesium/graphics/points',
+        redirect: '/cesium/graphics/pointGraphics',
         name: 'graphics',
         meta: {
           title: 'graphics',
@@ -80,11 +80,59 @@ const adminList = [
         },
         children: [
           {
-            path: 'points',
-            name: 'points',
-            component: 'views/Graphics/Points',
+            path: 'pointGraphics',
+            name: 'pointGraphics',
+            component: 'views/Graphics/PointGraphics',
             meta: {
-              title: 'Points'
+              title: '点'
+            }
+          },
+          {
+            path: 'lineGraphics',
+            name: 'lineGraphics',
+            component: 'views/Graphics/LineGraphics',
+            meta: {
+              title: '线'
+            }
+          },
+          {
+            path: 'polygonGraphics',
+            name: 'polygonGraphics',
+            component: 'views/Graphics/PolygonGraphics',
+            meta: {
+              title: '面'
+            }
+          },
+          {
+            path: 'modelGraphics',
+            name: 'modelGraphics',
+            component: 'views/Graphics/ModelGraphics',
+            meta: {
+              title: '模型'
+            }
+          },
+          {
+            path: 'cylinderGraphics',
+            name: 'cylinderGraphics',
+            component: 'views/Graphics/CylinderGraphics',
+            meta: {
+              title: '圆柱'
+            }
+          },
+          {
+            path: 'customDefBillboardGraphics',
+            name: 'customDefBillboardGraphics',
+            component: 'views/Graphics/CustomDefBillboardGraphics',
+            meta: {
+              title: '标牌气泡框'
+            }
+          },
+          {
+            path: 'divGraphics',
+            name: 'divGraphics',
+            component: 'views/Graphics/DivGraphics',
+            meta: {
+              title: '自定义div'
             }
           }
         ]
@@ -95,7 +143,7 @@ const adminList = [
         redirect: '/cesium/line/simapleLine',
         name: 'line',
         meta: {
-          title: '线',
+          title: '动态线',
           icon: 'carbon:skill-level-advanced'
         },
         children: [

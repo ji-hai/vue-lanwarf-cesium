@@ -12,7 +12,7 @@ const { mapRegister, mapMethods } = useCesium()
 const { getMap } = mapMethods
 
 defineOptions({
-  name: 'Points'
+  name: 'ModelGraphics'
 })
 
 import CesiumGraphics from '@/components/Cesium/CesiumGraphics'
@@ -32,45 +32,6 @@ const cesiumLoadCB = (viewer) => {
 
   cesiumGraphics = new CesiumGraphics(viewer)
 
-  //  点
-  cesiumGraphics.createPointsGraphics({
-    positions: [Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)],
-    point: {
-      pixelSize: 10,
-      color: Cesium.Color.RED
-    },
-    billboard: {
-      image: '/src/assets/image/img.png'
-    },
-    label: {
-      text: '我是一个点',
-      font: '20px sans-serif',
-      fillColor: Cesium.Color.RED,
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      outlineWidth: 2,
-      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-      pixelOffset: new Cesium.Cartesian2(0, -9)
-    }
-  })
-
-  // 线
-  cesiumGraphics.createLineGraphics({
-    positions: [
-      Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0),
-      Cesium.Cartesian3.fromDegrees(120.34, 30.25, 0)
-    ],
-    width: 10,
-    material: Cesium.Color.BLUE,
-    clampToGround: true
-  })
-
-  // 面
-  cesiumGraphics.createPolygonGraphics({
-    positions: Cesium.Cartesian3.fromDegreesArray([120.0, 30.0, 121.0, 30.0, 120.0, 31.0]),
-    material: Cesium.Color.BLUE,
-    clampToGround: true
-  })
-
   // 模型
   cesiumGraphics.createModelGraphics({
     position: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 5000),
@@ -83,41 +44,17 @@ const cesiumLoadCB = (viewer) => {
     //   )
     // ),
     model: {
-      uri: '//data.mars3d.cn/gltf/mars/jingche/jingche.gltf',
+      uri: '/src/assets/SampleData/glb/pyramid.glb',
       minimumPixelSize: 500,
       maximumScale: 10000,
       scale: 0.1
     }
   })
-
-  // 圆柱
-  cesiumGraphics.createFadeCylinderGraphics({
-    position: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)
-  })
-
-  // 旋转圆柱
-  cesiumGraphics.craeteRotateCylinderGraphics({
-    position: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0)
-  })
-
-  // 默认自定义标牌气泡框
-  cesiumGraphics.createCustomDefBillboardGraphics({
-    position: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0),
-    text: '测试文本',
-    img: 'src/assets/image/div2.png',
-    callback: (e) => {
-      // console.log(e)
-    }
-  })
 }
-
-onBeforeUnmount(() => {
-  // getMap().entities.removeAll()
-})
 </script>
 
 <template>
-  <ContentWrap title="Points">
+  <ContentWrap title="ModelGraphics">
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"
