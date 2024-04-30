@@ -11,7 +11,7 @@ const adminList = [
     name: 'cesium',
     meta: {
       title: 'cesium',
-      icon: 'carbon:skill-level-advanced'
+      icon: 'simple-icons:cesium'
     },
     children: [
       {
@@ -20,7 +20,8 @@ const adminList = [
         component: '##',
         redirect: '/cesium/basic/skyBox',
         meta: {
-          title: 'cesium基础'
+          title: 'cesium基础',
+          icon: 'simple-icons:cesium'
         },
         children: [
           {
@@ -28,7 +29,8 @@ const adminList = [
             name: 'skyBox',
             component: 'views/SkyBox/SkyBox',
             meta: {
-              title: '天空盒'
+              title: '天空盒',
+              icon: 'formkit:skype'
             }
           }
         ]
@@ -40,7 +42,7 @@ const adminList = [
         name: 'material',
         meta: {
           title: '材质',
-          icon: 'carbon:skill-level-advanced'
+          icon: 'lets-icons:materials'
         },
         children: [
           {
@@ -48,7 +50,8 @@ const adminList = [
             name: 'waveCircleMaterial',
             component: 'views/Material/WaveCircleMaterial',
             meta: {
-              title: '波动圆材质'
+              title: '波动圆材质',
+              icon: 'carbon:circle-filled'
             }
           },
           {
@@ -56,7 +59,8 @@ const adminList = [
             name: 'customMaterialLine',
             component: 'views/Material/CustomMaterialLine',
             meta: {
-              title: '流动线条材质'
+              title: '流动线条材质',
+              icon: 'pepicons-print:line-y'
             }
           },
           {
@@ -64,7 +68,8 @@ const adminList = [
             name: 'circleFadeMaterial',
             component: 'views/Material/CircleFadeMaterial',
             meta: {
-              title: '渐变圆材质'
+              title: '渐变圆材质',
+              icon: 'fa6-solid:circle-dot'
             }
           }
         ]
@@ -76,7 +81,7 @@ const adminList = [
         name: 'graphics',
         meta: {
           title: 'graphics',
-          icon: 'carbon:skill-level-advanced'
+          icon: 'mdi:graphics-processing-unit'
         },
         children: [
           {
@@ -84,7 +89,8 @@ const adminList = [
             name: 'pointGraphics',
             component: 'views/Graphics/PointGraphics',
             meta: {
-              title: '点'
+              title: '点',
+              icon: 'tabler:point-filled'
             }
           },
           {
@@ -92,7 +98,8 @@ const adminList = [
             name: 'alarmPoint',
             component: 'views/Graphics/AlarmPoint',
             meta: {
-              title: '报警点'
+              title: '报警点',
+              icon: 'material-symbols-light:detector-alarm-rounded'
             }
           },
           {
@@ -100,7 +107,8 @@ const adminList = [
             name: 'alarmCircle',
             component: 'views/Graphics/AlarmCircle',
             meta: {
-              title: '报警圆'
+              title: '报警圆',
+              icon: 'guidance:alarm-bell'
             }
           },
           {
@@ -108,7 +116,8 @@ const adminList = [
             name: 'lineGraphics',
             component: 'views/Graphics/LineGraphics',
             meta: {
-              title: '线'
+              title: '线',
+              icon: 'uil:line-alt'
             }
           },
           {
@@ -116,7 +125,8 @@ const adminList = [
             name: 'polygonGraphics',
             component: 'views/Graphics/PolygonGraphics',
             meta: {
-              title: '面'
+              title: '面',
+              icon: 'ph:polygon-light'
             }
           },
           {
@@ -124,7 +134,8 @@ const adminList = [
             name: 'modelGraphics',
             component: 'views/Graphics/ModelGraphics',
             meta: {
-              title: '模型'
+              title: '模型',
+              icon: 'carbon:model-alt'
             }
           },
           {
@@ -132,7 +143,8 @@ const adminList = [
             name: 'cylinderGraphics',
             component: 'views/Graphics/CylinderGraphics',
             meta: {
-              title: '圆柱'
+              title: '圆柱',
+              icon: 'ph:cylinder-light'
             }
           },
           {
@@ -140,7 +152,8 @@ const adminList = [
             name: 'customDefBillboardGraphics',
             component: 'views/Graphics/CustomDefBillboardGraphics',
             meta: {
-              title: '标牌气泡框'
+              title: '标牌气泡框',
+              icon: 'mdi:billboard'
             }
           },
           {
@@ -148,7 +161,8 @@ const adminList = [
             name: 'divGraphics',
             component: 'views/Graphics/DivGraphics',
             meta: {
-              title: '自定义div'
+              title: '自定义div',
+              icon: 'fluent:diversity-48-regular'
             }
           },
           {
@@ -156,7 +170,8 @@ const adminList = [
             name: 'Popup',
             component: 'views/Prompt/Popup',
             meta: {
-              title: '自定义弹框'
+              title: '自定义弹框',
+              icon: 'carbon:popup'
             }
           }
         ]
@@ -168,7 +183,7 @@ const adminList = [
         name: 'line',
         meta: {
           title: '动态线',
-          icon: 'carbon:skill-level-advanced'
+          icon: 'mingcute:xrp-line'
         },
         children: [
           {
@@ -176,7 +191,8 @@ const adminList = [
             name: 'demo',
             component: 'views/Line/Demo',
             meta: {
-              title: 'demo'
+              title: 'demo',
+              icon: 'tdesign:play-demo'
             }
           },
           {
@@ -184,7 +200,17 @@ const adminList = [
             name: 'simapleLine',
             component: 'views/Line/SimapleLine',
             meta: {
-              title: '简单线'
+              title: '简单线',
+              icon: 'clarity:atom-line'
+            }
+          },
+          {
+            path: 'animationModel',
+            name: 'animationModel',
+            component: 'views/Line/AnimationModel',
+            meta: {
+              title: '漫游',
+              icon: 'mingcute:walk-line'
             }
           }
         ]
@@ -196,7 +222,7 @@ const adminList = [
         name: 'particle',
         meta: {
           title: '粒子',
-          icon: 'carbon:skill-level-advanced'
+          icon: 'meteocons:smoke-particles-fill'
         },
         children: [
           {
@@ -204,7 +230,8 @@ const adminList = [
             name: 'fireworks',
             component: 'views/Particle/Fireworks',
             meta: {
-              title: '烟花'
+              title: '烟花',
+              icon: 'mingcute:firework-line'
             }
           }
         ]
@@ -216,7 +243,7 @@ const adminList = [
         name: 'polygon',
         meta: {
           title: '面',
-          icon: 'carbon:skill-level-advanced'
+          icon: 'mingcute:polygon-line'
         },
         children: [
           {
@@ -224,7 +251,8 @@ const adminList = [
             name: 'hexagon',
             component: 'views/Polygon/Hexagon',
             meta: {
-              title: '六边形扩散'
+              title: '六边形扩散',
+              icon: 'uil:polygon'
             }
           }
         ]
@@ -236,7 +264,7 @@ const adminList = [
         name: 'sceneEffects',
         meta: {
           title: '场景效果',
-          icon: 'carbon:skill-level-advanced'
+          icon: 'fluent:text-effects-sparkle-24-regular'
         },
         children: [
           {
@@ -244,7 +272,29 @@ const adminList = [
             name: 'modifyMap',
             component: 'views/ModifyMap/ModifyMap',
             meta: {
-              title: '反色滤镜'
+              title: '反色滤镜',
+              icon: 'icon-park-outline:modify-two'
+            }
+          }
+        ]
+      },
+      {
+        path: 'cesiumPlugin',
+        component: '#',
+        redirect: '/cesium/cesiumPlugin/cesiumWind',
+        name: 'cesiumPlugin',
+        meta: {
+          title: '插件',
+          icon: 'mdi:plugin-outline'
+        },
+        children: [
+          {
+            path: 'cesiumWind',
+            name: 'cesiumWind',
+            component: 'views/CesiumPlugin/CesiumWind',
+            meta: {
+              title: '风场',
+              icon: 'icon-park-twotone:whirlwind'
             }
           }
         ]
@@ -258,7 +308,7 @@ const adminList = [
     name: 'navigator',
     meta: {
       title: 'navigator',
-      icon: 'carbon:skill-level-advanced'
+      icon: 'iconoir:navigator-alt'
     },
     children: [
       {
@@ -266,7 +316,8 @@ const adminList = [
         name: 'navigator',
         component: 'views/Navigator/Navigator',
         meta: {
-          title: 'Navigator'
+          title: 'Navigator',
+          icon: 'iconoir:navigator-alt'
         }
       },
       {
@@ -274,7 +325,8 @@ const adminList = [
         name: 'codeView',
         component: 'views/CodeView/CodeView',
         meta: {
-          title: 'codeView'
+          title: 'codeView',
+          icon: 'octicon:file-code-24'
         }
       }
     ]
@@ -286,7 +338,7 @@ const adminList = [
     name: 'test',
     meta: {
       title: 'test',
-      icon: 'carbon:skill-level-advanced'
+      icon: 'carbon:test-tool'
     },
     children: [
       {
@@ -294,7 +346,8 @@ const adminList = [
         name: 'test1',
         component: 'views/Test/Test',
         meta: {
-          title: 'Test'
+          title: 'Test',
+          icon: 'carbon:test-tool'
         }
       },
       {
@@ -302,7 +355,8 @@ const adminList = [
         name: 'test2',
         component: 'views/CodeView/CodeView',
         meta: {
-          title: 'test2'
+          title: 'test2',
+          icon: 'carbon:test-tool'
         }
       }
     ]

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onBeforeUnmount } from 'vue'
 import { ContentWrap } from '@/components/ContentWrap'
 import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 
@@ -15,13 +16,13 @@ defineOptions({
   name: 'DivGraphics'
 })
 
-import { onBeforeMount, onBeforeUnmount } from 'vue'
 import Css3Renderer from '@/components/Cesium/CesiumCss3Renderer'
 
+let css3Renderer
 const cesiumLoadCB = (viewer) => {
   // 相机定位
   viewer.camera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 17850000 * 0.01),
+    destination: Cesium.Cartesian3.fromDegrees(120, 30, 17850000 * 0.01),
     orientation: {
       heading: Cesium.Math.toRadians(350.4202942851978),
       pitch: Cesium.Math.toRadians(-89.74026687972041),
@@ -29,13 +30,13 @@ const cesiumLoadCB = (viewer) => {
     }
   })
 
-  let css3Renderer = new Css3Renderer(
+  css3Renderer = new Css3Renderer(
     viewer,
     [
       {
         id: 'box4',
         position: [120, 30, 50.0],
-        element: `<div style="position: fixed;top: 0;left: 0;color: red" id="box4">xxx 信息点</div>`,
+        element: `<div style="position: fixed;top: 0;left: 0;color: red" id="box4">我是自定义div</div>`,
         offset: [200, 160]
       }
     ],
@@ -59,6 +60,11 @@ const cesiumLoadCB = (viewer) => {
   //   circleShow: false
   // })
 }
+
+onBeforeUnmount(() => {
+  // 清除自定义div
+  css3Renderer?.remove('box4')
+})
 </script>
 
 <template>

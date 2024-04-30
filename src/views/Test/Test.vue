@@ -5,10 +5,6 @@ import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 import { useCesium } from '@/hooks/web/useCesium'
 import * as Cesium from 'cesium'
 
-import CesiumWind from '/public/js/cesium-wind.esm.js'
-
-import StormField from '/public/js/storm/StormField'
-
 const { mapRegister, mapMethods } = useCesium()
 
 const { getMap } = mapMethods
@@ -34,64 +30,11 @@ const cesiumLoadCB = (viewer) => {
     }
   })
   // ========================================================================
-
-  // const windOptions = {
-  //   colorScale: [
-  //     'rgb(36,104, 180)',
-  //     'rgb(60,157, 194)',
-  //     'rgb(128,205,193 )',
-  //     'rgb(151,218,168 )',
-  //     'rgb(198,231,181)',
-  //     'rgb(238,247,217)',
-  //     'rgb(255,238,159)',
-  //     'rgb(252,217,125)',
-  //     'rgb(255,182,100)',
-  //     'rgb(252,150,75)',
-  //     'rgb(250,112,52)',
-  //     'rgb(245,64,32)',
-  //     'rgb(237,45,28)',
-  //     'rgb(220,24,32)',
-  //     'rgb(180,0,35)'
-  //   ],
-  //   frameRate: 16,
-  //   maxAge: 60,
-  //   globalAlpha: 0.9,
-  //   velocityScale: 1 / 30,
-  //   paths: 2000
-  // }
-
-  // fetch('/public/data/uvwind_d01.json')
-  //   .then((res) => res.json())
-  //   .then((res) => {
-  //     const windLayer = new CesiumWind(res, { windOptions })
-  //     windLayer.addTo(viewer)
-  //   })
-
-  var data = [
-    {
-      x: 120.3077,
-      y: 30.0539,
-      speed: 15,
-      direction: 269
-    },
-    {
-      x: 120.3177,
-      y: 30.0439,
-      speed: 15,
-      direction: 269
-    }
-  ]
-  var stormField = new StormField(viewer, data, {
-    forecastTime: 2
-  })
-
-  stormField.animate()
-
 }
 </script>
 
 <template>
-  <ContentWrap title="Hexagon">
+  <ContentWrap title="Test">
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"

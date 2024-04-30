@@ -92,7 +92,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       }),
       UnoCSS(),
       // sveltekit(),
-	  cesium()
+	    cesium()
     ],
 
     css: {

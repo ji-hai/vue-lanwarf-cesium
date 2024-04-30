@@ -53,72 +53,38 @@ const modifyMap = (viewer, options) => {
 }
 
 const cesiumLoadCB = (viewer) => {
-  gui
-    .addColor(
-      {
-        filterRGB: [7, 47, 109]
-      },
-      'filterRGB'
-    )
-    .onChange((val) => {
-      modifyMap(viewer, {
-        invertColor: false,
-        filterRGB: [parseInt(val[0]), parseInt(val[1]), parseInt(val[2])]
-      })
-    })
+  // gui
+  //   .addColor(
+  //     {
+  //       filterRGB: [7, 47, 109]
+  //     },
+  //     'filterRGB'
+  //   )
+  //   .onChange((val) => {
+  //     modifyMap(viewer, {
+  //       invertColor: false,
+  //       filterRGB: [parseInt(val[0]), parseInt(val[1]), parseInt(val[2])]
+  //     })
+  //   })
 
-  gui
-    .add(
-      {
-        invertColor: false
-      },
-      'invertColor'
-    )
-    .onChange((val) => {
-      // modifyMap(viewer, {
-      //   invertColor: val,
-      //   filterRGB: [125,125,125]
-      // })
-    })
-  let startPosition = new Cesium.Cartesian3.fromDegrees(120.14046454, 30.27415039)
-  let endPosition = new Cesium.Cartesian3.fromDegrees(120.16701991, 30.27648221)
-  let factor = 0
-  // 添加模型
-  const vehicleEntity = viewer.entities.add({
-    position: new Cesium.CallbackProperty(function () {
-      if (factor > 5000) {
-        factor = 0
-      }
-      factor++
-      // 动态更新位置
-      return Cesium.Cartesian3.lerp(
-        startPosition,
-        endPosition,
-        factor / 5000.0,
-        new Cesium.Cartesian3()
-      )
-    }, false),
-    // orientation: Cesium.Transforms.headingPitchRollQuaternion(
-    //   Cesium.Cartesian3.fromDegrees(120.16907205003166, 30.175928962346774, 0),
-    //   new Cesium.HeadingPitchRoll(
-    //     Cesium.Math.toRadians(90), // 方向
-    //     Cesium.Math.toRadians(0),
-    //     Cesium.Math.toRadians(0)
-    //   )
-    // ),
-    model: {
-      uri: 'src/assets/SampleData/glb/redCar.glb',
-      scale: 0.1
-    },
-    path: {
-      resolution: 60,
-      width: 100,
-      material: Cesium.Color.RED,
-      leadTime: 0,
-      trailTime: 0
-    }
+  // gui
+  //   .add(
+  //     {
+  //       invertColor: false
+  //     },
+  //     'invertColor'
+  //   )
+  //   .onChange((val) => {
+  //     // modifyMap(viewer, {
+  //     //   invertColor: val,
+  //     //   filterRGB: [125,125,125]
+  //     // })
+  //   })
+
+  modifyMap(viewer, {
+    invertColor: true,
+    filterRGB: [125, 125, 125]
   })
-  viewer.trackedEntity = vehicleEntity
 }
 </script>
 
