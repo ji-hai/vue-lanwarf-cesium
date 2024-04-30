@@ -71,42 +71,42 @@ class CesiumBase {
 
   //场景蓝光
   //  colorTexture1 不支持
-  static setBlurBloom(options) {
-    options = options || {}
-    const fs =
-      'uniform float height;\n' +
-      'uniform float width;\n' +
-      'uniform sampler2D colorTexture1;\n' +
-      '\n' +
-      'varying vec2 v_textureCoordinates;\n' +
-      '\n' +
-      'const int SAMPLES = 9;\n' +
-      'void main()\n' +
-      '{\n' +
-      'vec2 st = v_textureCoordinates;\n' +
-      'float wr = float(1.0 / width);\n' +
-      'float hr = float(1.0 / height);\n' +
-      'vec4 result = vec4(0.0);\n' +
-      'int count = 0;\n' +
-      'for(int i = -SAMPLES; i <= SAMPLES; ++i){\n' +
-      'for(int j = -SAMPLES; j <= SAMPLES; ++j){\n' +
-      'vec2 offset = vec2(float(i) * wr, float(j) * hr);\n' +
-      'result += texture2D(colorTexture1, st + offset);\n' +
-      '}\n' +
-      '}\n' +
-      'result = result / float(count);\n' +
-      'gl_FragColor = result;\n' +
-      '}\n'
-    return new PostProcessStage({
-      name: 'blur_x_direction',
-      fragmentShader: fs,
-      uniforms: {
-        width: options.width,
-        height: options.height,
-        colorTexture1: 'Bright'
-      }
-    })
-  }
+  // static setBlurBloom(options) {
+  //   options = options || {}
+  //   const fs =
+  //     'uniform float height;\n' +
+  //     'uniform float width;\n' +
+  //     'uniform sampler2D colorTexture;\n' +
+  //     '\n' +
+  //     'varying vec2 v_textureCoordinates;\n' +
+  //     '\n' +
+  //     'const int SAMPLES = 9;\n' +
+  //     'void main()\n' +
+  //     '{\n' +
+  //     'vec2 st = v_textureCoordinates;\n' +
+  //     'float wr = float(1.0 / width);\n' +
+  //     'float hr = float(1.0 / height);\n' +
+  //     'vec4 result = vec4(0.0);\n' +
+  //     'int count = 0;\n' +
+  //     'for(int i = -SAMPLES; i <= SAMPLES; ++i){\n' +
+  //     'for(int j = -SAMPLES; j <= SAMPLES; ++j){\n' +
+  //     'vec2 offset = vec2(float(i) * wr, float(j) * hr);\n' +
+  //     'result += texture2D(colorTexture, st + offset);\n' +
+  //     '}\n' +
+  //     '}\n' +
+  //     'result = result / float(count);\n' +
+  //     'gl_FragColor = result;\n' +
+  //     '}\n'
+  //   return new PostProcessStage({
+  //     name: 'blur_x_direction',
+  //     fragmentShader: fs,
+  //     uniforms: {
+  //       width: options.width,
+  //       height: options.height,
+  //       colorTexture: 'Bright'
+  //     }
+  //   })
+  // }
 
   //雨天特效
   static setRainEffect() {
@@ -234,7 +234,13 @@ class CesiumBase {
   }
 }
 
-//坐标转换 笛卡尔转84
+/***
+ * 坐标转换 笛卡尔转84
+ *
+ * @param {Object} Cartesian3 三维位置坐标
+ *
+ * @return {Object} {lng,lat,alt} 地理坐标
+ */
 const transformCartesianToWGS84 = (cartesian) => {
   if (cartesian) {
     const ellipsoid = Cesium.Ellipsoid.WGS84
@@ -247,7 +253,13 @@ const transformCartesianToWGS84 = (cartesian) => {
   }
 }
 
-//坐标数组转换 笛卡尔转84
+/***
+ * 坐标数组转换 笛卡尔转84
+ *
+ * @param {Array} WSG84Arr {lng,lat,alt} 地理坐标数组
+ * @param {Number} alt 拔高
+ * @return {Array} Cartesian3 三维位置坐标数组
+ */
 const transformWGS84ArrayToCartesianArray = (WSG84Arr, alt) => {
   if (WSG84Arr) {
     return WSG84Arr
@@ -258,7 +270,13 @@ const transformWGS84ArrayToCartesianArray = (WSG84Arr, alt) => {
   }
 }
 
-//坐标转换 84转笛卡尔
+/***
+ * 坐标转换 84转笛卡尔
+ *
+ * @param {Object} {lng,lat,alt} 地理坐标
+ *
+ * @return {Object} Cartesian3 三维位置坐标
+ */
 const transformWGS84ToCartesian = (position, alt) => {
   return position
     ? Cesium.Cartesian3.fromDegrees(
@@ -270,7 +288,13 @@ const transformWGS84ToCartesian = (position, alt) => {
     : Cesium.Cartesian3.ZERO
 }
 
-//坐标数组转换 84转笛卡尔
+/***
+ * 坐标数组转换 笛卡尔转86
+ *
+ * @param {Array} cartesianArr 三维位置坐标数组
+ *
+ * @return {Array} {lng,lat,alt} 地理坐标数组
+ */
 const transformCartesianArrayToWGS84Array = (cartesianArr) => {
   if (cartesianArr) {
     return cartesianArr
@@ -281,8 +305,63 @@ const transformCartesianArrayToWGS84Array = (cartesianArr) => {
   }
 }
 
+/***
+ * @description: 地球自转
+ */
+class GlobeRotate {
+  constructor(viewer) {
+    this._viewer = viewer
+  }
+
+  // 根据国际天体参考系计算旋转矩阵
+  _icrf() {
+    if (this._viewer.scene.mode !== Cesium.SceneMode.SCENE3D) {
+      return ture
+    }
+    const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(this._viewer.clock.currentTime)
+    if (icrfToFixed) {
+      const camera = this._viewer.camera
+      const offset = Cesium.Cartesian3.clone(camera.position)
+      const transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed)
+      // 偏移相机，否则会场景旋转而地球不转
+      camera.lookAtTransform(transform, offset)
+    }
+  }
+
+  // 绑定事件
+  _bindEvent() {
+    // 转动的速度设置
+    this._viewer.clock.multiplier = 15 * 1000
+    // 初始化为单位矩阵
+    this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+    this._viewer.scene.postUpdate.addEventListener(this._icrf, this)
+  }
+
+  // 解除绑定
+  _unbindEvent() {
+    this._viewer.clock.multiplier = 1
+    this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+    this._viewer.scene.postUpdate.removeEventListener(this._icrf, this)
+  }
+
+  // 开始旋转
+  start() {
+    this._viewer.clock.shouldAnimate = true
+    this._unbindEvent()
+    this._bindEvent()
+    return this
+  }
+
+  // 停止旋转
+  stop() {
+    this._unbindEvent()
+    return this
+  }
+}
+
 export {
   CesiumBase,
+  GlobeRotate,
   transformCartesianToWGS84,
   transformWGS84ArrayToCartesianArray,
   transformWGS84ToCartesian,

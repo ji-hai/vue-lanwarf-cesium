@@ -2,32 +2,26 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 
-import { ElButton } from 'element-plus'
 import { useCesium } from '@/hooks/web/useCesium'
-import * as Cesium from 'cesium'
 
-// import { CesiumDraw } from '@/components/Cesium/CesiumDraw/index'
+import { GlobeRotate } from '@/components/Cesium/CesiumBase'
 const { mapRegister, mapMethods } = useCesium()
 
 const { getMap } = mapMethods
 
 defineOptions({
-  name: 'Test'
+  name: 'GlobeRotate'
 })
 
 const cesiumLoadCB = (viewer) => {
-  // let cesiumDraw = new CesiumDraw(viewer)
-  // cesiumDraw.drawLineGraphics({
-  //   measure: true,
-  //   callback: () => {
-  //     console.log(111)
-  //   }
-  // })
+  // 地球球体自转
+  let globeRotate = new GlobeRotate(viewer)
+  globeRotate.start()
 }
 </script>
 
 <template>
-  <ContentWrap title="Test">
+  <ContentWrap title="地球自转">
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"

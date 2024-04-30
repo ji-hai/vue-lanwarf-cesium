@@ -59,6 +59,8 @@ const cesiumLoadCB = (viewer) => {
       trailTime: 0
     }
   })
+
+  // 聚焦模型
   viewer.trackedEntity = vehicleEntity
 }
 </script>

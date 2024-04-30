@@ -254,6 +254,15 @@ const adminList = [
               title: '六边形扩散',
               icon: 'uil:polygon'
             }
+          },
+          {
+            path: 'water',
+            name: 'water',
+            component: 'views/Polygon/Water',
+            meta: {
+              title: '水面',
+              icon: 'uil:polygon'
+            }
           }
         ]
       },
@@ -270,9 +279,36 @@ const adminList = [
           {
             path: 'modifyMap',
             name: 'modifyMap',
-            component: 'views/ModifyMap/ModifyMap',
+            component: 'views/SceneEffects/ModifyMap',
             meta: {
               title: '反色滤镜',
+              icon: 'icon-park-outline:modify-two'
+            }
+          },
+          {
+            path: 'screenshot',
+            name: 'screenshot',
+            component: 'views/SceneEffects/Screenshot',
+            meta: {
+              title: '场景截图',
+              icon: 'icon-park-outline:modify-two'
+            }
+          },
+          {
+            path: 'globeRotate',
+            name: 'globeRotate',
+            component: 'views/SceneEffects/GlobeRotate',
+            meta: {
+              title: '地球自转',
+              icon: 'icon-park-outline:modify-two'
+            }
+          },
+          {
+            path: 'eagleEye',
+            name: 'eagleEye',
+            component: 'views/SceneEffects/EagleEye',
+            meta: {
+              title: '鹰眼地图',
               icon: 'icon-park-outline:modify-two'
             }
           }

@@ -1,33 +1,33 @@
 <script setup lang="ts">
+import { onMounted, defineOptions } from 'vue'
 import { ContentWrap } from '@/components/ContentWrap'
 import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 
-import { ElButton } from 'element-plus'
 import { useCesium } from '@/hooks/web/useCesium'
-import * as Cesium from 'cesium'
 
-// import { CesiumDraw } from '@/components/Cesium/CesiumDraw/index'
+import CesiumEagleEye from '@/components/Cesium/CesiumEagleEye'
 const { mapRegister, mapMethods } = useCesium()
 
 const { getMap } = mapMethods
 
 defineOptions({
-  name: 'Test'
+  name: 'EagleEye'
 })
 
 const cesiumLoadCB = (viewer) => {
-  // let cesiumDraw = new CesiumDraw(viewer)
-  // cesiumDraw.drawLineGraphics({
-  //   measure: true,
-  //   callback: () => {
-  //     console.log(111)
-  //   }
-  // })
+  new CesiumEagleEye(getMap(), 'eye')
 }
+
+// onMounted(() => {
+//   setTimeout(() => {
+//     new CesiumEagleEye(getMap(), 'eye')
+//   }, 2000)
+// })
 </script>
 
 <template>
-  <ContentWrap title="Test">
+  <ContentWrap title="地球自转">
+    <div class="w-100px h-100px" id="eye"></div>
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"

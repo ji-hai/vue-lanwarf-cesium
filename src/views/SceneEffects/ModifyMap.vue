@@ -53,6 +53,19 @@ const modifyMap = (viewer, options) => {
 }
 
 const cesiumLoadCB = (viewer) => {
+  viewer.camera.setView({
+    destination: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 5000),
+    orientation: {
+      heading: Cesium.Math.toRadians(350.4202942851978),
+      pitch: Cesium.Math.toRadians(-89.74026687972041),
+      roll: Cesium.Math.toRadians(0.1)
+    },
+    complete: () => {
+      // 定位完成之后的回调函数
+      // 聚合
+      // addCesiumCluster(earthquakes)
+    }
+  })
   // gui
   //   .addColor(
   //     {
@@ -81,9 +94,35 @@ const cesiumLoadCB = (viewer) => {
   //     // })
   //   })
 
+  const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7']
+  viewer.imageryLayers.addImageryProvider(
+    new Cesium.WebMapTileServiceImageryProvider({
+      //影像标注
+      url: 'http://t{s}.tianditu.gov.cn/vec_w/wmts?tk=80cd3c8ae46ae32fa0ac19f6d739d310',
+      subdomains: subdomains,
+      layer: 'vec',
+      style: 'default',
+      tileMatrixSetID: 'w',
+      format: 'tiles',
+      maximumLevel: 18
+    })
+  )
+  viewer.imageryLayers.addImageryProvider(
+    new Cesium.WebMapTileServiceImageryProvider({
+      //影像标注
+      url: 'http://t{s}.tianditu.gov.cn/cva_w/wmts?tk=80cd3c8ae46ae32fa0ac19f6d739d310',
+      subdomains: subdomains,
+      layer: 'cva',
+      style: 'default',
+      tileMatrixSetID: 'w',
+      format: 'tiles',
+      maximumLevel: 18
+    })
+  )
+
   modifyMap(viewer, {
     invertColor: true,
-    filterRGB: [125, 125, 125]
+    filterRGB: [60, 145, 172]
   })
 }
 </script>

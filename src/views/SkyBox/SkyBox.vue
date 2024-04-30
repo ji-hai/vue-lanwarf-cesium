@@ -62,9 +62,9 @@ const changeSkyBox = (type: number) => {
     case 4:
       getMap().scene.postProcessStages.add(CesiumBase.setDarkEffect())
       break
-    case 5:
-      getMap().scene.postProcessStages.add(CesiumBase.setBlurBloom({ width: 0.5, height: 0.5 }))
-      break
+    // case 5:
+    //   getMap().scene.postProcessStages.add(CesiumBase.setBlurBloom({ width: 800, height: 800 }))
+    //   break
     case 6:
       getMap().scene.postProcessStages.add(CesiumBase.setRainEffect())
       break
@@ -87,7 +87,7 @@ const changeSkyBox = (type: number) => {
       <ElButton :type="BtnType === 2 ? 'primary' : ''" @click="changeSkyBox(2)">天空盒2</ElButton>
       <ElButton :type="BtnType === 3 ? 'primary' : ''" @click="changeSkyBox(3)">天空盒3</ElButton>
       <ElButton :type="BtnType === 4 ? 'primary' : ''" @click="changeSkyBox(4)">黑夜特效</ElButton>
-      <ElButton :type="BtnType === 5 ? 'primary' : ''" @click="changeSkyBox(5)">场景蓝光</ElButton>
+      <!-- <ElButton :type="BtnType === 5 ? 'primary' : ''" @click="changeSkyBox(5)">场景蓝光</ElButton> -->
       <ElButton :type="BtnType === 6 ? 'primary' : ''" @click="changeSkyBox(6)">雨天特效</ElButton>
       <ElButton :type="BtnType === 7 ? 'primary' : ''" @click="changeSkyBox(7)">雪天特效</ElButton>
       <ElButton :type="BtnType === 8 ? 'primary' : ''" @click="changeSkyBox(8)">雾天特效</ElButton>

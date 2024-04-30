@@ -22,7 +22,7 @@ let cesiumGraphics
 const cesiumLoadCB = (viewer) => {
   // 相机定位
   viewer.camera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 17850000 * 0.01),
+    destination: Cesium.Cartesian3.fromDegrees(120.84, 30.15, 178500 * 0.01),
     orientation: {
       heading: Cesium.Math.toRadians(350.4202942851978),
       pitch: Cesium.Math.toRadians(-89.74026687972041),
