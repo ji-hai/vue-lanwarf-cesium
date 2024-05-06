@@ -353,6 +353,15 @@ const adminList = [
               title: '绘制',
               icon: 'icon-park-twotone:whirlwind'
             }
+          },
+          {
+            path: 'terrainClipPlan',
+            name: 'terrainClipPlan',
+            component: 'views/CesiumDraw/TerrainClipPlan',
+            meta: {
+              title: '地形开挖',
+              icon: 'icon-park-twotone:whirlwind'
+            }
           }
         ]
       }

@@ -136,8 +136,6 @@ class TerrainClipPlan {
   }
 
   _createWell(e) {
-    console.log(e);
-    
     if (Boolean(this.viewer.terrainProvider._layers)) {
       const t = this
       this._createBottomSurface(e.bottom_pos)
