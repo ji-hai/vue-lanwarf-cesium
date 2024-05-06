@@ -16,7 +16,7 @@ defineOptions({
   name: 'DivGraphics'
 })
 
-import Css3Renderer from '@/components/Cesium/CesiumCss3Renderer'
+import CesiumDivGraphics from '@/components/Cesium/CesiumDivGraphics'
 
 let css3Renderer
 const cesiumLoadCB = (viewer) => {
@@ -30,9 +30,9 @@ const cesiumLoadCB = (viewer) => {
     }
   })
 
-  css3Renderer = new Css3Renderer(
-    viewer,
-    [
+  css3Renderer = new CesiumDivGraphics({
+    viewer: viewer,
+    elements: [
       {
         id: 'box4',
         position: [120, 30, 50.0],
@@ -40,8 +40,8 @@ const cesiumLoadCB = (viewer) => {
         offset: [200, 160]
       }
     ],
-    false
-  )
+    isBackHide: false
+  })
 
   // let css3Renderer = new Css3Renderer(viewer, [], true)
   // css3Renderer.addEntityLayer({

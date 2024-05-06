@@ -6,7 +6,7 @@ import {
   transformCartesianArrayToWGS84Array
 } from '../CesiumBase'
 
-import { CircleFadeMaterial } from '../CesiumMaterialProperty'
+import { CircleFadeMaterial, DynamicWallMaterialProperty } from '../CesiumMaterialProperty'
 
 class CesiumGraphics {
   declare viewer: any
@@ -16,12 +16,12 @@ class CesiumGraphics {
   }
 
   // 创建一个实体图形
-  createGraphics() {
+  public createGraphics() {
     return new Cesium.Entity()
   }
 
   //点
-  private getPointGraphics({
+  public getPointGraphics({
     color = Cesium.Color.GREEN,
     pixelSize = 5,
     outlineColor = Cesium.Color.WHITE,
@@ -34,7 +34,7 @@ class CesiumGraphics {
   }
 
   //线
-  private getLineGraphics({
+  public getLineGraphics({
     show = true,
     material = Cesium.Color.YELLOW,
     width = 1,
@@ -47,7 +47,7 @@ class CesiumGraphics {
   }
 
   // 面
-  private getPolygonGraphics({
+  public getPolygonGraphics({
     material = Cesium.Color.RED.withAlpha(0.2),
     clampToGround = false,
     positions = [],
@@ -59,7 +59,7 @@ class CesiumGraphics {
   }
 
   //标签
-  private getLabelGraphics({
+  public getLabelGraphics({
     text = '',
     font = '14px sans-serif',
     fillColor = Cesium.Color.GOLD,
@@ -90,7 +90,7 @@ class CesiumGraphics {
   }
 
   //广告牌
-  private getBillboardGraphics({
+  public getBillboardGraphics({
     width = 35,
     height = 35,
     clampToGround = true,
@@ -115,7 +115,7 @@ class CesiumGraphics {
   }
 
   //路径
-  private getPathGraphics({
+  public getPathGraphics({
     resolution = 1,
     glowPower = 0.1,
     color = Cesium.Color.YELLOW,
@@ -138,7 +138,7 @@ class CesiumGraphics {
   }
 
   //模型
-  private getModelGraphics({
+  public getModelGraphics({
     show = true,
     uri = '',
     scale = 1,
@@ -163,7 +163,7 @@ class CesiumGraphics {
   }
 
   //椭圆
-  private getEllipseGraphics({
+  public getEllipseGraphics({
     semiMajorAxis = 1000000.0, //单位 米
     semiMinorAxis = 1000000.0, //单位 米
     metarial = Cesium.Color.RED.withAlpha(0.5),
@@ -176,7 +176,7 @@ class CesiumGraphics {
   }
 
   // 球
-  private getEllipsoidGraphics({
+  getEllipsoidGraphics({
     radii = new Cesium.Cartesian3(1000000.0, 1000000.0, 1000000.0), //单位 米 默认100公里
     material = Cesium.Color.RED.withAlpha(0.1),
     outline = true,
@@ -207,7 +207,7 @@ class CesiumGraphics {
   }
 
   // 面
-  private getPlaneGraphics({
+  public getPlaneGraphics({
     plane = new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 0.0), //面
     dimensions = new Cesium.Cartesian2(1000000.0, 1000000.0), //面宽高
     material = Cesium.Color.BLUE.withAlpha(0.5), //面颜色
@@ -230,7 +230,7 @@ class CesiumGraphics {
   }
 
   // 锥体
-  private getCylinderGraphics({
+  public getCylinderGraphics({
     HeightReference = Cesium.HeightReference.RELATIVE_TO_GROUND,
     length = 500.0,
     topRadius = 500.0,
@@ -307,27 +307,18 @@ class CesiumGraphics {
     return this.viewer.entities.add(entity)
   }
 
-  // 创建地面指示
-  public craeteCorridorGraphics(options) {
-    if (options && options.positions) {
-      const entity = this.createGraphics()
-      entity.corridor = {
-        positions: options.positions,
-        height: options.height || 6.0,
-        width: options.width || 15.0,
-        material:
-          options.material ||
-          new Cesium.WarnLinkMaterialProperty({
-            freely: 'cross',
-            color: Cesium.Color.YELLOW,
-            duration: 1000,
-            count: 1.0,
-            direction: '+'
-          })
-      }
-
-      return this.viewer.entities.add(entity)
+  // 创建走廊
+  public craeteCorridorGraphics({ positions, height = 6.0, width = 15.0, material, ...args }) {
+    const entity = this.createGraphics()
+    entity.corridor = {
+      positions: positions,
+      height: height || 6.0,
+      width: width || 15.0,
+      material: material,
+      args
     }
+
+    return this.viewer.entities.add(entity)
   }
 
   //构建动态线

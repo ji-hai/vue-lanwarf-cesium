@@ -264,7 +264,7 @@ const transformWGS84ArrayToCartesianArray = (WSG84Arr, alt) => {
   if (WSG84Arr) {
     return WSG84Arr
       ? WSG84Arr.map(function (item) {
-          return transformCartesianToWGS84(item, alt)
+          return transformWGS84ToCartesian(item, alt)
         })
       : []
   }
@@ -289,7 +289,7 @@ const transformWGS84ToCartesian = (position, alt) => {
 }
 
 /***
- * 坐标数组转换 笛卡尔转86
+ * 坐标数组转换 笛卡尔转84
  *
  * @param {Array} cartesianArr 三维位置坐标数组
  *
@@ -303,6 +303,112 @@ const transformCartesianArrayToWGS84Array = (cartesianArr) => {
         })
       : []
   }
+}
+
+/**
+ * 84坐标转制图坐标
+ * @param {Object} position {lng,lat,alt} 地理坐标
+ * @return {Object} Cartesian3 三维位置坐标
+ */
+const transformWGS84ToCartographic = (position) => {
+  return position
+    ? Cesium.Cartographic.fromDegrees(position.lng || position.lon, position.lat, position.alt)
+    : Cesium.Cartographic.ZERO
+}
+
+/**
+ * 拾取位置点
+ * @param {Object} viewer
+ * @return {Object} px Cartesian3 三维位置坐标
+ */
+const getCatesian3FromPX = (viewer, px) => {
+  if (viewer && px) {
+    // var picks = viewer.scene.drillPick(px); // 3dtilset
+    // for (var i = 0; i < picks.length; i++) {
+    //     if (picks[i] instanceof Cesium.Cesium3DTileFeature) { //模型上拾取
+    //         isOn3dtiles = true;
+    //     }
+    // }
+    const picks = viewer.scene.pick(px)
+    let cartesian = null
+    let isOn3dtiles = false,
+      isOnTerrain = false
+    if (picks instanceof Cesium.Cesium3DTileFeature) {
+      //模型上拾取
+      isOn3dtiles = true
+    }
+    // 3dtilset
+    if (isOn3dtiles) {
+      cartesian = viewer.scene.pickPosition(px)
+      if (cartesian) {
+        const cartographic = Cesium.Cartographic.fromCartesian(cartesian)
+        if (cartographic.height < 0) cartographic.height = 0
+        const lon = Cesium.Math.toDegrees(cartographic.longitude),
+          lat = Cesium.Math.toDegrees(cartographic.latitude),
+          height = cartographic.height //模型高度
+        cartesian = transformWGS84ToCartesian({ lng: lon, lat: lat, alt: height })
+      }
+    }
+    // 地形
+    if (!picks && (!viewer.terrainProvide) instanceof Cesium.EllipsoidTerrainProvider) {
+      const ray = viewer.scene.camera.getPickRay(px)
+      if (!ray) return null
+      cartesian = viewer.scene.globe.pick(ray, viewer.scene)
+      isOnTerrain = true
+    }
+    // 地球
+    if (!isOn3dtiles && !isOnTerrain) {
+      cartesian = viewer.scene.camera.pickEllipsoid(px, viewer.scene.globe.ellipsoid)
+    }
+    if (cartesian) {
+      const position = transformCartesianToWGS84(cartesian)
+      if (position.alt < 0) {
+        cartesian = transformWGS84ToCartesian(position, 0.1)
+      }
+      return cartesian
+    }
+    return false
+  }
+}
+
+/**
+ * 获取84坐标的距离
+ * @param {*} positions
+ */
+const getPositionDistance = (positions) => {
+  let distance = 0
+  for (let i = 0; i < positions.length - 1; i++) {
+    const point1cartographic = transformWGS84ToCartographic(positions[i])
+    const point2cartographic = transformWGS84ToCartographic(positions[i + 1])
+    const geodesic = new Cesium.EllipsoidGeodesic()
+    geodesic.setEndPoints(point1cartographic, point2cartographic)
+    let s = geodesic.surfaceDistance
+    s = Math.sqrt(
+      Math.pow(s, 2) + Math.pow(point2cartographic.height - point1cartographic.height, 2)
+    )
+    distance = distance + s
+  }
+  return distance.toFixed(3)
+}
+
+/**
+ * 计算一组坐标组成的面的面积
+ * @param {*} positions
+ */
+const getPositionsArea = (positions) => {
+  let result = 0
+  if (positions) {
+    let h = 0
+    const ellipsoid = Cesium.Ellipsoid.WGS84
+    positions.push(positions[0])
+    for (let i = 1; i < positions.length; i++) {
+      const oel = ellipsoid.cartographicToCartesian(transformWGS84ToCartographic(positions[i - 1]))
+      const el = ellipsoid.cartographicToCartesian(transformWGS84ToCartographic(positions[i]))
+      h += oel.x * el.y - el.x * oel.y
+    }
+    result = Math.abs(h).toFixed(2)
+  }
+  return result
 }
 
 /***
@@ -362,6 +468,9 @@ class GlobeRotate {
 export {
   CesiumBase,
   GlobeRotate,
+  getCatesian3FromPX,
+  getPositionDistance,
+  getPositionsArea,
   transformCartesianToWGS84,
   transformWGS84ArrayToCartesianArray,
   transformWGS84ToCartesian,

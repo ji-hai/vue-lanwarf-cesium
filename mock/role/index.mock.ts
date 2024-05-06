@@ -334,6 +334,27 @@ const adminList = [
             }
           }
         ]
+      },
+      {
+        path: 'cesiumDraw',
+        component: '#',
+        redirect: '/cesium/cesiumDraw/drawEntity',
+        name: 'cesiumDraw',
+        meta: {
+          title: '绘制',
+          icon: 'mdi:plugin-outline'
+        },
+        children: [
+          {
+            path: 'drawEntity',
+            name: 'drawEntity',
+            component: 'views/CesiumDraw/DrawEntity',
+            meta: {
+              title: '绘制',
+              icon: 'icon-park-twotone:whirlwind'
+            }
+          }
+        ]
       }
     ]
   },
