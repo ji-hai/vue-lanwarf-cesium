@@ -25,6 +25,10 @@ class CesiumDraw {
     viewer && viewer.dataSources.add(this._drawLayer)
   }
 
+  get drawLayer() {
+    return this._drawLayer
+  }
+
   /**
    * 画点
    * @param {*} options
@@ -361,7 +365,7 @@ class CesiumDraw {
         $this = this,
         circleObj,
         _radius = 1,
-      _handler = new Cesium.ScreenSpaceEventHandler(this._viewer.scene.canvas)
+        _handler = new Cesium.ScreenSpaceEventHandler(this._viewer.scene.canvas)
 
       // 计算半径
       function computeRadius(src, dest) {
@@ -629,7 +633,7 @@ class CesiumDraw {
     options.style = options.style || {}
     if (this._viewer && options) {
       const $this = this
-      let cesiumGraphics = new CesiumGraphics($this._viewer)
+      const cesiumGraphics = new CesiumGraphics($this._viewer)
       this.drawCircleGraphics({
         callback: function (result, obj) {
           const entity = cesiumGraphics.createGraphics()

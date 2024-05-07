@@ -9,80 +9,90 @@
   <body>
     <div id="app">
       <style>
-          .loading{
-              width: 100%;
-              height: calc(100vh - 50px);
-              display: flex;
-              justify-content: center;
-              align-items: center;
-          }
-          .container {
-              width: 200px;
-              height: 200px;
-              position: relative;
-          }
-          .container::before {
-                 content: '';
-                 width: 80px;
-                 height: 15px;
-                 background: linear-gradient(135deg, #292a3a, #536976);
-                 opacity: 0.7;
-                 position: absolute;
-                 top: 130px;
-                 left: 70px;
-                 border-radius: 50%;
-                 animation: shadow 1s linear infinite;
-             }
-          .container::after {
-                 content: '';
-                 width: 60px;
-                 height: 60px;
-                 background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-                 position: absolute;
-                 top: 65px;
-                 left: 80px;
-                 border-radius: 3px;
-                 animation: animate 1s linear infinite;
-          }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        #app {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .trinity-rings-spinner, .trinity-rings-spinner * {
+      box-sizing: border-box;
+    }
 
-          @keyframes animate {
-              17% {
-                  border-bottom-right-radius: 3px;
-              }
+    .trinity-rings-spinner {
+      height: 66px;
+      width: 66px;
+      padding: 3px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .trinity-rings-spinner .circle {
+      position:absolute;
+      display:block;
+      border-radius:50%;
+      border: 3px solid #2b75f4;
+      opacity: 1;
+    }
 
-              25% {
-                  transform: translateY(9px) rotate(22.5deg);
-              }
+    .trinity-rings-spinner .circle:nth-child(1) {
+      height: 60px;
+      width: 60px;
+      animation : trinity-rings-spinner-circle1-animation 1.5s infinite linear;
+      border-width: 3px;
+    }
+    .trinity-rings-spinner .circle:nth-child(2) {
+      height: calc(60px * 0.65);
+      width: calc(60px * 0.65);
+      animation : trinity-rings-spinner-circle2-animation 1.5s infinite linear;
+      border-width: 2px;
+    }
+    .trinity-rings-spinner .circle:nth-child(3) {
+      height: calc(60px * 0.1);
+      width: calc(60px * 0.1);
+      animation:trinity-rings-spinner-circle3-animation 1.5s infinite linear;
+      border-width: 1px;
+    }
 
-              50% {
-                  transform: translateY(18px) scale(1, .9) rotate(45deg);
-                  border-bottom-right-radius: 40px;
-              }
-
-              75% {
-                  transform: translateY(9px) rotate(67.5deg);
-              }
-
-              100% {
-                  transform: translateY(0) rotate(90deg);
-              }
-          }
-
-          @keyframes shadow {
-
-              0%,
-              100% {
-                  transform: scale(1, 1);
-              }
-
-              50% {
-                  transform: scale(1.2, 1);
-              }
-          }
+    @keyframes trinity-rings-spinner-circle1-animation{
+      0% {
+        transform: rotateZ(20deg) rotateY(0deg);
+      }
+      100% {
+        transform: rotateZ(100deg) rotateY(360deg);
+      }
+    }
+    @keyframes trinity-rings-spinner-circle2-animation{
+      0% {
+        transform: rotateZ(100deg) rotateX(0deg);
+      }
+      100% {
+        transform: rotateZ(0deg) rotateX(360deg);
+      }
+    }
+    @keyframes trinity-rings-spinner-circle3-animation{
+      0% {
+        transform: rotateZ(100deg) rotateX(-360deg);
+      }
+      100% {
+        transform: rotateZ(-360deg) rotateX(360deg);
+      }
+    }
       </style>
-        <div class="loading">
-            <div class="container"></div>
-        </div>
+      <div class="trinity-rings-spinner">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

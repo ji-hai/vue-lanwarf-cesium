@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
 import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
-
-import { ElButton } from 'element-plus'
 import { useCesium } from '@/hooks/web/useCesium'
+import { ElLink } from 'element-plus'
 import * as Cesium from 'cesium'
 
 import CesiumDraw from '@/components/Cesium/CesiumDraw'
-import { DynamicWallMaterialProperty } from '@/components/Cesium/CesiumMaterialProperty'
-import TerrainClipPlan from '@/components/Cesium/CesiumTerrainClipPlan'
-import { transformWGS84ArrayToCartesianArray } from '@/components/Cesium/CesiumBase'
 
 const { mapRegister, mapMethods } = useCesium()
 
@@ -19,58 +15,70 @@ defineOptions({
   name: 'Test'
 })
 
-let polygon1 = []
-const cesiumLoadCB = (viewer) => {
-  const cesiumGraphics = new CesiumDraw(viewer)
-  // let demo = cesiumGraphics.craeteCorridorGraphics({
-  //   positions: Cesium.Cartesian3.fromDegreesArray([
-  //     120.073204, 30.929314, 120.085957, 30.928574, 120.086901, 30.920896
-  //   ]),
-  //   width: 100,
-  //   extrudedHeight: 200,
-  //   heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
-  //   cornerType: Cesium.CornerType.ROUNDED,
-  //   material: new DynamicWallMaterialProperty({
-  //     viewer: viewer,
-  //     image: '/src/assets/image/colors.png',
-  //     color: Cesium.Color.RED,
-  //     duration: 18000
-  //   })
-  // })
+const cesiumLoadCB = async (viewer) => {
+  let tileset = await Cesium.Cesium3DTileset.fromUrl('src/assets/file/保利b3dm/tileset.json', {
+    skipLevelOfDetail: true,
+    baseScreenSpaceError: 1024,
+    skipScreenSpaceErrorFactor: 16,
+    skipLevels: 2,
+    immediatelyLoadDesiredLevelOfDetail: false,
+    loadSiblings: false,
+    cullWithChildrenBounds: true
+  })
+  viewer.scene.primitives.add(tileset)
+  viewer.zoomTo(tileset)
+  viewer.scene.globe.translucency.enabled = true
+  // viewer.scene.globe.depthTestAgainstTerrain = true
 
-  // viewer.flyTo(demo)
+  //根据地形设置调整高度
+  let height = -65 //设置高度调整参数
+  var cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center)
+  var surface = Cesium.Cartesian3.fromRadians(
+    cartographic.longitude,
+    cartographic.latitude,
+    cartographic.height
+  )
+  var offset = Cesium.Cartesian3.fromRadians(
+    cartographic.longitude,
+    cartographic.latitude,
+    cartographic.height + height
+  )
+  var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3())
+  tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation)
 
-  cesiumGraphics.drawPolygonGraphics({
+  let _maxH = 100,
+    _speed = 1,
+    _interval = 10
+  let cesiumDraw = new CesiumDraw(viewer)
+  cesiumDraw.drawPolygonGraphics({
+    height: 1,
     callback: (polygon, polygonObj) => {
-      polygon1 = polygon
-      // terrainClipPlan.updateData(polygon)
+      if (viewer.scene.globe.depthTestAgainstTerrain) {
+        alert('请开启深度检测')
+        return false
+      }
+      if (polygonObj) {
+        setTimeout(() => {
+          polygonObj.polygon.heightReference = 'CLAMP_TO_GROUND'
+          polygonObj.polygon.material = 'src/assets/image/water.jpg'
+          var h = 0.0
+          polygonObj.polygon.extrudedHeight = h
+          var st = setInterval(function () {
+            h = h + _speed
+            if (h >= _maxH) {
+              h = _maxH
+              clearTimeout(st)
+            }
+            polygonObj.polygon.extrudedHeight = h
+          }, _interval)
+        }, 2000)
+      }
     }
   })
-
-  // let terrainClipPlan = new Cesium.TerrainClipPlan($this._viewer, {
-  //   height: 30,
-  //   splitNum: 50,
-  //   wallImg: 'src/assets/images/excavate_side_min.jpg',
-  //   bottomImg: 'src/assets/images/excavate_bottom_min.jpg'
-  // })
-  // terrainClipPlan.updateData($this.transformWGS84ArrayToCartesianArray(polygon))
-}
-
-const getClip = () => {
-  let terrainClipPlan = new TerrainClipPlan({
-    viewer: getMap(),
-    // positions: transformWGS84ArrayToCartesianArray(polygon1),
-    height: 200,
-    splitNum: 1000,
-    wallImg: 'src/assets/image/excavate_side_min.jpg',
-    bottomImg: 'src/assets/image/excavate_bottom_min.jpg'
-  })
-  terrainClipPlan.updateData(transformWGS84ArrayToCartesianArray(polygon1, 500))
 }
 </script>
 
 <template>
-  <ElButton @click="getClip"> 111 </ElButton>
   <ContentWrap title="Test">
     <div class="w-[100%] h-[100%]">
       <cesium-component

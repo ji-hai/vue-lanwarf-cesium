@@ -311,6 +311,33 @@ const adminList = [
               title: '鹰眼地图',
               icon: 'icon-park-outline:modify-two'
             }
+          },
+          {
+            path: '3dtiles',
+            name: '3dtiles',
+            component: 'views/SceneEffects/3Dtiles',
+            meta: {
+              title: '3dtiles',
+              icon: 'icon-park-outline:modify-two'
+            }
+          },
+          {
+            path: 'czml',
+            name: 'czml',
+            component: 'views/SceneEffects/CZML',
+            meta: {
+              title: 'czml',
+              icon: 'icon-park-outline:modify-two'
+            }
+          },
+          {
+            path: 'submergedAnalysis',
+            name: 'submergedAnalysis',
+            component: 'views/SceneEffects/SubmergedAnalysis',
+            meta: {
+              title: '淹没分析',
+              icon: 'icon-park-outline:modify-two'
+            }
           }
         ]
       },
@@ -422,6 +449,27 @@ const adminList = [
         component: 'views/CodeView/CodeView',
         meta: {
           title: 'test2',
+          icon: 'carbon:test-tool'
+        }
+      }
+    ]
+  },
+  {
+    path: '/cssAnimation',
+    component: '#',
+    redirect: '/cssAnimation/spinners',
+    name: 'cssAnimation',
+    meta: {
+      title: 'css动画',
+      icon: 'carbon:test-tool'
+    },
+    children: [
+      {
+        path: 'spinners',
+        name: 'spinners',
+        component: 'views/CssAnimation/Spinners',
+        meta: {
+          title: '旋转动画',
           icon: 'carbon:test-tool'
         }
       }

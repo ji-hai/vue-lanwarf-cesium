@@ -78,24 +78,37 @@ class TerrainClipPlan {
       planes: t,
       edgeWidth: 1,
       edgeColor: Cesium.Color.WHITE,
-      enabled: true
+      enabled: !0
     })
     this._prepareWell(e)
     this._createWell(this.wellData)
   }
 
   clear() {
-    this.viewer.scene.globe.clippingPlanes &&
-      ((this.viewer.scene.globe.clippingPlanes.enabled = !1),
-      this.viewer.scene.globe.clippingPlanes.removeAll(),
-      this.viewer.scene.globe.clippingPlanes.isDestroyed() ||
-        this.viewer.scene.globe.clippingPlanes.destroy()),
-      (this.viewer.scene.globe.clippingPlanes = void 0),
-      this.bottomSurface && this.viewer.scene.primitives.remove(this.bottomSurface),
-      this.wellWall && this.viewer.scene.primitives.remove(this.wellWall),
-      delete this.bottomSurface,
-      delete this.wellWall,
+    if (this.viewer.scene.globe.clippingPlanes) {
+      this.viewer.scene.globe.clippingPlanes.removeAll()
+
+      this.bottomSurface && this.viewer.scene.primitives.remove(this.bottomSurface)
+
+      this.wellWall && this.viewer.scene.primitives.remove(this.wellWall)
+
+      delete this.bottomSurface
+
+      delete this.wellWall
+
       this.viewer.scene.render()
+    }
+    // this.viewer.scene.globe.clippingPlanes &&
+    //   ((this.viewer.scene.globe.clippingPlanes.enabled = !1),
+    //   this.viewer.scene.globe.clippingPlanes.removeAll(),
+    //   this.viewer.scene.globe.clippingPlanes.isDestroyed() ||
+    //     this.viewer.scene.globe.clippingPlanes.destroy()),
+    //   (this.viewer.scene.globe.clippingPlanes = void 0),
+    //   this.bottomSurface && this.viewer.scene.primitives.remove(this.bottomSurface),
+    //   this.wellWall && this.viewer.scene.primitives.remove(this.wellWall),
+    //   delete this.bottomSurface,
+    //   delete this.wellWall,
+    //   this.viewer.scene.render()
   }
 
   _prepareWell(e) {

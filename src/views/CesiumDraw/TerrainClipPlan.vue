@@ -19,20 +19,24 @@ defineOptions({
   name: 'TerrainClipPlan'
 })
 
-let polygon1 = []
+let cesiumDraw
+let terrainClipPlan
 const cesiumLoadCB = (viewer) => {
-  const cesiumGraphics = new CesiumDraw(viewer)
+  cesiumDraw = new CesiumDraw(viewer)
+  terrainClipPlan = new TerrainClipPlan({
+    viewer: viewer,
+    // positions: transformWGS84ArrayToCartesianArray(polygon),
+    height: 200,
+    splitNum: 100,
+    wallImg: 'src/assets/image/excavate_side_min.jpg',
+    bottomImg: 'src/assets/image/excavate_bottom_min.jpg'
+  })
+}
 
-  cesiumGraphics.drawPolygonGraphics({
+const start = () => {
+  cesiumDraw.drawPolygonGraphics({
     callback: (polygon, polygonObj) => {
-      let terrainClipPlan = new TerrainClipPlan({
-        viewer: viewer,
-        // positions: transformWGS84ArrayToCartesianArray(polygon),
-        height: 200,
-        splitNum: 1000,
-        wallImg: 'src/assets/image/excavate_side_min.jpg',
-        bottomImg: 'src/assets/image/excavate_bottom_min.jpg'
-      })
+      cesiumDraw.drawLayer.entities.remove(polygonObj)
       terrainClipPlan.updateData(transformWGS84ArrayToCartesianArray(polygon))
     }
   })
@@ -40,7 +44,8 @@ const cesiumLoadCB = (viewer) => {
 </script>
 
 <template>
-  <ContentWrap title="TerrainClipPlan">
+  <ContentWrap title="地形开挖">
+    <ElButton @click="start">开挖</ElButton>
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"
