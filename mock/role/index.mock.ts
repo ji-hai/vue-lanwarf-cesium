@@ -5,6 +5,27 @@ const timeout = 1000
 
 const adminList = [
   {
+    path: '/doc',
+    component: '#',
+    redirect: '/doc/index',
+    name: 'doc',
+    meta: {
+      title: 'doc',
+      icon: 'carbon:test-tool'
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: 'views/Doc/index',
+        meta: {
+          title: '帮助文档',
+          icon: 'carbon:test-tool'
+        }
+      }
+    ]
+  },
+  {
     path: '/cesium',
     component: '#',
     redirect: '/cesium/basic/skyBox',
