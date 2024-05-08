@@ -11,7 +11,9 @@ import { useDesign } from '@/hooks/web/useDesign'
 import { Icon } from '@/components/Icon'
 import { loginOutApi } from '@/api/login'
 import { useTagsViewStore } from '@/store/modules/tagsView'
+import { useUserStore } from '@/store/modules/user'
 
+const useUser = useUserStore()
 const tagsViewStore = useTagsViewStore()
 
 const { clear } = useStorage()
@@ -95,7 +97,7 @@ function handleShowForm(show = false) {
         <div :class="`${prefixCls}-entry-content`">
           <div class="flex flex-col items-center">
             <img src="@/assets/imgs/avatar.jpg" alt="" class="w-70px h-70px rounded-[50%]" />
-            <span class="text-14px my-10px text-[var(--logo-title-text-color)]">Archer</span>
+            <span class="text-14px my-10px text-[var(--logo-title-text-color)]">{{ useUser.getLoginInfo?.username }}</span>
           </div>
           <ElInput
             type="password"
