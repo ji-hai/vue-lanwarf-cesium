@@ -128,7 +128,21 @@ onMounted(() => {
   // })
 
   // 北京时间
-  // viewer.clock.currentTime = Cesium.JulianDate.addHours(Cesium.JulianDate.now(new Date()), 8, new Cesium.JulianDate());
+  viewer.clock.currentTime = Cesium.JulianDate.addHours(
+    Cesium.JulianDate.now(new Date()),
+    8,
+    new Cesium.JulianDate()
+  )
+
+  // cesium去除双击trackedEntity
+  viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
+    Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+  )
+
+  // 默认定位到中国
+  viewer.camera.setView({
+    destination: Cesium.Cartesian3.fromDegrees(116.435314, 40.960521, 50000000.0)
+  })
 
   emit('register', viewer)
   props.cesiumLoadCB(viewer)

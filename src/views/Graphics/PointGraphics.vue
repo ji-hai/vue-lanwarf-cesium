@@ -33,7 +33,7 @@ const cesiumLoadCB = (viewer) => {
   cesiumGraphics = new CesiumGraphics(viewer)
 
   //  点
-  cesiumGraphics.createPointsGraphics({
+  let point =cesiumGraphics.createPointsGraphics({
     positions: [
       Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0),
       Cesium.Cartesian3.fromDegrees(120.85, 30.15, 0)
