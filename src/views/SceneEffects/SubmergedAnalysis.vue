@@ -2,7 +2,7 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import CesiumComponent from '@/components/Cesium/Cesium.component.vue'
 import { useCesium } from '@/hooks/web/useCesium'
-import { ElLink } from 'element-plus'
+import { ElLink, ElButton } from 'element-plus'
 import * as Cesium from 'cesium'
 
 import CesiumDraw from '@/components/Cesium/CesiumDraw'
@@ -15,6 +15,7 @@ defineOptions({
   name: 'SubmergedAnalysis'
 })
 
+let cesiumDraw
 const cesiumLoadCB = async (viewer) => {
   let tileset = await Cesium.Cesium3DTileset.fromUrl('src/assets/file/保利b3dm/tileset.json', {
     skipLevelOfDetail: true,
@@ -46,10 +47,10 @@ const cesiumLoadCB = async (viewer) => {
   var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3())
   tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation)
 
-  let _maxH = 100,
-    _speed = 1,
-    _interval = 10
-  let cesiumDraw = new CesiumDraw(viewer)
+  let targetHeight = 100,
+    speed = 0.1,
+    waterHeight = 10
+  cesiumDraw = new CesiumDraw(viewer)
   cesiumDraw.drawPolygonGraphics({
     height: 1,
     callback: (polygon, polygonObj) => {
@@ -58,28 +59,28 @@ const cesiumLoadCB = async (viewer) => {
         return false
       }
       if (polygonObj) {
-        setTimeout(() => {
-          polygonObj.polygon.heightReference = 'CLAMP_TO_GROUND'
-          polygonObj.polygon.material = 'src/assets/image/water.jpg'
-          var h = 0.0
-          polygonObj.polygon.extrudedHeight = h
-          var st = setInterval(function () {
-            h = h + _speed
-            if (h >= _maxH) {
-              h = _maxH
-              clearTimeout(st)
-            }
-            polygonObj.polygon.extrudedHeight = h
-          }, _interval)
-        }, 2000)
+        polygonObj.polygon.perPositionHeight = true
+        polygonObj.polygon.extrudedHeight = new Cesium.CallbackProperty(() => {
+          waterHeight = waterHeight + speed
+          if (waterHeight > targetHeight) {
+            waterHeight = targetHeight
+          }
+          return waterHeight
+        }, false)
+        polygonObj.polygon.material = 'src/assets/image/water.jpg'
       }
     }
   })
+}
+
+const clear = () => {
+  cesiumDraw.drawLayer.entities.removeAll()
 }
 </script>
 
 <template>
   <ContentWrap title="淹没分析">
+    <ElButton type="primary" @click="clear">清除</ElButton>
     <div class="w-[100%] h-[100%]">
       <cesium-component
         @register="mapRegister"

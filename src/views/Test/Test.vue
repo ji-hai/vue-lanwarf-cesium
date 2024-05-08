@@ -16,65 +16,14 @@ defineOptions({
 })
 
 const cesiumLoadCB = async (viewer) => {
-  let tileset = await Cesium.Cesium3DTileset.fromUrl('src/assets/file/保利b3dm/tileset.json', {
-    skipLevelOfDetail: true,
-    baseScreenSpaceError: 1024,
-    skipScreenSpaceErrorFactor: 16,
-    skipLevels: 2,
-    immediatelyLoadDesiredLevelOfDetail: false,
-    loadSiblings: false,
-    cullWithChildrenBounds: true
-  })
-  viewer.scene.primitives.add(tileset)
-  viewer.zoomTo(tileset)
-  viewer.scene.globe.translucency.enabled = true
-  // viewer.scene.globe.depthTestAgainstTerrain = true
-
-  //根据地形设置调整高度
-  let height = -65 //设置高度调整参数
-  var cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center)
-  var surface = Cesium.Cartesian3.fromRadians(
-    cartographic.longitude,
-    cartographic.latitude,
-    cartographic.height
-  )
-  var offset = Cesium.Cartesian3.fromRadians(
-    cartographic.longitude,
-    cartographic.latitude,
-    cartographic.height + height
-  )
-  var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3())
-  tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation)
-
-  let _maxH = 100,
-    _speed = 1,
-    _interval = 10
-  let cesiumDraw = new CesiumDraw(viewer)
-  cesiumDraw.drawPolygonGraphics({
-    height: 1,
-    callback: (polygon, polygonObj) => {
-      if (viewer.scene.globe.depthTestAgainstTerrain) {
-        alert('请开启深度检测')
-        return false
-      }
-      if (polygonObj) {
-        setTimeout(() => {
-          polygonObj.polygon.heightReference = 'CLAMP_TO_GROUND'
-          polygonObj.polygon.material = 'src/assets/image/water.jpg'
-          var h = 0.0
-          polygonObj.polygon.extrudedHeight = h
-          var st = setInterval(function () {
-            h = h + _speed
-            if (h >= _maxH) {
-              h = _maxH
-              clearTimeout(st)
-            }
-            polygonObj.polygon.extrudedHeight = h
-          }, _interval)
-        }, 2000)
-      }
-    }
-  })
+  viewer.scene.postProcessStages.bloom.enabled = true
+  viewer.scene.postProcessStages.bloom.uniforms.contrast = 119
+  viewer.scene.postProcessStages.bloom.uniforms.brightness = -0.4
+  viewer.scene.postProcessStages.bloom.uniforms.glowOnly = false
+  viewer.scene.postProcessStages.bloom.uniforms.delta = 0.9
+  viewer.scene.postProcessStages.bloom.uniforms.sigma = 3.78
+  viewer.scene.postProcessStages.bloom.uniforms.stepSize = 5
+  viewer.scene.postProcessStages.bloom.uniforms.isSelected = false
 }
 </script>
 

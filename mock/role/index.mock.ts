@@ -338,6 +338,24 @@ const adminList = [
               title: '淹没分析',
               icon: 'icon-park-outline:modify-two'
             }
+          },
+          {
+            path: 'videoProjection',
+            name: 'videoProjection',
+            component: 'views/SceneEffects/VideoProjection',
+            meta: {
+              title: '视频投影',
+              icon: 'icon-park-outline:modify-two'
+            }
+          },
+          {
+            path: 'subsurfaceModel',
+            name: 'subsurfaceModel',
+            component: 'views/SceneEffects/SubsurfaceModel',
+            meta: {
+              title: '地下模式',
+              icon: 'icon-park-outline:modify-two'
+            }
           }
         ]
       },
