@@ -1,4 +1,4 @@
-.ysc-dynamic-layer{
+.lanwarf-dynamic-layer{
     /*重要*/
     user-select: none; /*禁止选中*/
     pointer-events: none; /*鼠标穿透*/
@@ -10,7 +10,7 @@
     height:250px;
     z-index: 99999;
 }
-.ysc-dynamic-layer .line{
+.lanwarf-dynamic-layer .line{
     position: absolute;
     left:0;
     width:0;
@@ -27,7 +27,7 @@
         width:50px;
     }
 }
-.ysc-dynamic-layer .main{
+.lanwarf-dynamic-layer .main{
     position: absolute;
     top:0;
     left:50px;
@@ -52,7 +52,7 @@
         opacity: 1
     }
 }
-.ysc-dynamic-layer .light{
+.lanwarf-dynamic-layer .light{
     position: absolute;
     z-index: 2;
     width: 100%;
@@ -61,9 +61,9 @@
 .cesium-viewer-timelineContainer,.cesium-viewer-bottom{
     display: none!important;
 }
-.ys-css3-container{
+.lanwarf-css3-container{
     position: fixed;
 }
-.ys-css3-box{
+.lanwarf-css3-box{
     position: fixed;
 }

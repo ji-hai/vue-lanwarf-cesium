@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /**
  * 画笔模块
  * @param {*} viewer
@@ -30,56 +31,58 @@ class CesiumDraw {
   }
 
   /**
-   * 画点
-   * @param {*} options
+   * 在视图中绘制一个点图形。
+   * @param {Object} options 绘制点图形的配置项。
+   * @param {Object} options.style 点图形的样式配置，包括图片路径、宽度、高度、是否贴地、缩放比例和像素偏移。
+   * @param {Function} options.callback 点击右键时的回调函数，接收转换后的wgs84 坐标数组和对象作为参数。
    */
-  drawPointGraphics(options) {
-    options = options || {}
-    options.style = options.style || {
+  drawPointGraphics({
+    style = {
       image: 'src/assets/image/location4.png',
       width: 35,
-      height: 40,
+      height: 50,
       clampToGround: true,
       scale: 1,
       pixelOffset: new Cesium.Cartesian2(0, -20)
-    }
+    },
+    callback = () => {}
+  }) {
+    // 创建一个实体用于表示点图形
+    let _poiEntity = new Cesium.Entity(),
+      position,
+      positions = [],
+      poiObj: any,
+      _handlers = new Cesium.ScreenSpaceEventHandler(this._viewer.scene.canvas)
+    // 左键点击事件：获取点击位置并添加到位置数组
+    _handlers.setInputAction((movement) => {
+      const cartesian = this._viewer.scene.camera.pickEllipsoid(
+        movement.position,
+        this._viewer.scene.globe.ellipsoid
+      )
+      if (cartesian && cartesian.x) {
+        position = cartesian
 
-    if (this._viewer && options) {
-      let _poiEntity = new Cesium.Entity(),
-        position,
-        positions = [],
-        poiObj,
-        $this = this,
-        _handlers = new Cesium.ScreenSpaceEventHandler(this._viewer.scene.canvas)
-      // left
-      _handlers.setInputAction(function (movement) {
-        const cartesian = $this._viewer.scene.camera.pickEllipsoid(
-          movement.position,
-          $this._viewer.scene.globe.ellipsoid
-        )
-        if (cartesian && cartesian.x) {
-          position = cartesian
+        positions.push(cartesian)
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    // 右键点击事件：移除事件处理器，调用回调函数，并传递位置数据
+    _handlers.setInputAction((movement) => {
+      _handlers.destroy()
+      _handlers = null
 
-          positions.push(cartesian)
-        }
-      }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
-      // right
-      _handlers.setInputAction(function (movement) {
-        _handlers.destroy()
-        _handlers = null
+      if (typeof callback === 'function') {
+        callback(transformCartesianArrayToWGS84Array(positions), poiObj)
+      }
+    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
 
-        if (typeof options.callback === 'function') {
-          options.callback(transformCartesianArrayToWGS84Array(positions), poiObj)
-        }
-      }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
+    // 设置点图形的样式和位置
+    _poiEntity.billboard = style
+    _poiEntity.position = new Cesium.CallbackProperty(function () {
+      return position
+    }, false)
 
-      _poiEntity.billboard = options.style
-      _poiEntity.position = new Cesium.CallbackProperty(function () {
-        return position
-      }, false)
-
-      poiObj = this._drawLayer.entities.add(_poiEntity)
-    }
+    // 将点图形添加到绘制层
+    poiObj = this._drawLayer.entities.add(_poiEntity)
   }
   /**
    * 画线 or 测距
@@ -167,6 +170,8 @@ class CesiumDraw {
           show: true,
           showBackground: true,
           font: '14px monospace',
+          backgroundColor: Cesium.Color.YELLOW.withAlpha(0.8),
+          fillColor: Cesium.Color.BLACK,
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           pixelOffset: new Cesium.Cartesian2(-20, -20) //left top
@@ -278,6 +283,8 @@ class CesiumDraw {
           show: true,
           showBackground: true,
           font: '14px monospace',
+          backgroundColor: Cesium.Color.YELLOW.withAlpha(0.8),
+          fillColor: Cesium.Color.BLACK,
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           pixelOffset: new Cesium.Cartesian2(-20, -20) //left top
@@ -636,10 +643,9 @@ class CesiumDraw {
       const cesiumGraphics = new CesiumGraphics($this._viewer)
       this.drawCircleGraphics({
         callback: function (result, obj) {
+          console.log(result)
           const entity = cesiumGraphics.createGraphics()
-          entity.ellipsoid = cesiumGraphics.getEllipsoidGraphics({
-            radii: result.radius
-          })
+          entity.ellipsoid = cesiumGraphics.getEllipsoidGraphics({})
           entity.position = result.center
 
           $this._drawLayer.entities.remove(obj)
@@ -695,9 +701,9 @@ class CesiumDraw {
       const $this = this
       $this.drawLineGraphics({
         callback: function (line, lineObj) {
-          const entity = $this.createGraphics()
+          const entity = new Cesium.Entity()
           entity.corridor = {
-            positions: $this.transformWGS84ArrayToCartesianArray(line),
+            positions: transformWGS84ArrayToCartesianArray(line),
             height: options.height || 1,
             width: options.width || 100,
             cornerType: Cesium.CornerType.BEVELED,
@@ -719,6 +725,22 @@ class CesiumDraw {
     }
   }
   /**
+   * 计算星型
+   * @param {*} arms
+   * @param {*} rOuter
+   * @param {*} rInner
+   */
+  computeStar2d = (arms, rOuter, rInner) => {
+    let angle = Math.PI / arms
+    let length = 2 * arms
+    let positions = new Array(length)
+    for (let i = 0; i < length; i++) {
+      let r = i % 2 === 0 ? rOuter : rInner
+      positions[i] = new Cesium.Cartesian2(Math.cos(i * angle) * r, Math.sin(i * angle) * r)
+    }
+    return positions
+  }
+  /**
    * 绘制管道
    * @param {*} options
    */
@@ -729,10 +751,10 @@ class CesiumDraw {
       const $this = this
       $this.drawLineGraphics({
         callback: function (line, lineObj) {
-          const entity = $this.createGraphics()
+          const entity = new Cesium.Entity()
           entity.polylineVolume = {
-            positions: $this.transformWGS84ArrayToCartesianArray(line),
-            shape: $this.computeStar2d(7, 1500, 3000),
+            positions: transformWGS84ArrayToCartesianArray(line),
+            shape: $this.computeStar2d(7, 150, 300),
             cornerType: Cesium.CornerType.MITERED,
             material: Cesium.Color.BLUE
           }

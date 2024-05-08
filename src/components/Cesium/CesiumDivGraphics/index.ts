@@ -24,7 +24,7 @@ class CesiumDivGraphics {
 
   init() {
     const container = document.createElement('div')
-    container.className = `ys-css3-container`
+    container.className = `lanwarf-css3-container`
     document.body.appendChild(container)
     this._container = container
 

@@ -177,27 +177,29 @@ class CesiumGraphics {
 
   // 球
   getEllipsoidGraphics({
-    radii = new Cesium.Cartesian3(1000000.0, 1000000.0, 1000000.0), //单位 米 默认100公里
-    material = Cesium.Color.RED.withAlpha(0.1),
-    outline = true,
-    maximumCone = Cesium.Math.PI_OVER_TWO,
-    stackPartitions = 56,
-    slicePartitions = 56,
-    outlineWidth = 2.0,
-    outlineColor = Cesium.Color.YELLOW,
-    fill = true,
+    radii = new Cesium.Cartesian3(300, 300, 300),
+    innerRadii = new Cesium.Cartesian3(100, 100, 100), //球从正北0-360
+    minimumClock = Cesium.Math.toRadians(0),
+    maximumClock = Cesium.Math.toRadians(360), //球从上到下0-180
+    minimumCone = Cesium.Math.toRadians(0),
+    maximumCone = Cesium.Math.toRadians(180),
+    fill = true, //是否填充
+    material = Cesium.Color.fromCssColorString(`rgba(255,0,0,1)`), //填充颜色,
+    outline = true, //是否轮廓线
+    outlineColor = Cesium.Color.fromCssColorString(`rgba(0,255,0,1)`), //轮廓线的颜色
     ...args
   } = {}) {
     return new Cesium.EllipsoidGraphics(
       Object.assign(
         {
           radii,
+          innerRadii,
+          minimumClock,
+          maximumClock,
+          minimumCone,
           material,
           outline,
           maximumCone,
-          stackPartitions,
-          slicePartitions,
-          outlineWidth,
           outlineColor,
           fill
         },

@@ -21,7 +21,7 @@ const cesiumLoadCB = (viewer) => {
 }
 
 const drawPoint = () => {
-  cesiumDraw.drawPointGraphics()
+  cesiumDraw.drawPointGraphics({})
 }
 
 const drawLine = () => {
@@ -61,9 +61,19 @@ const drawWall = () => {
 }
 
 const drawEllipsoid = () => {
-  cesiumDraw.drawEllipsoidGraphics({
-    measure: true
-  })
+  cesiumDraw.drawEllipsoidGraphics()
+}
+
+const drawCylinder = () => {
+  cesiumDraw.drawCylinderGraphics()
+}
+
+const drawCorridor = () => {
+  cesiumDraw.drawCorridorGraphics()
+}
+
+const drawPolylineVolume = () => {
+  cesiumDraw.drawPolylineVolumeGraphics()
 }
 </script>
 
@@ -77,9 +87,9 @@ const drawEllipsoid = () => {
     <ElButton class="mb-4" type="primary" @click="drawTriangles">画三角量测</ElButton>
     <ElButton class="mb-4" type="primary" @click="drawWall">画围栏</ElButton>
     <ElButton class="mb-4" type="primary" @click="drawEllipsoid">画球体</ElButton>
-    <ElButton class="mb-4" type="primary" @click="drawRectangle">画圆柱</ElButton>
-    <ElButton class="mb-4" type="primary" @click="drawRectangle">画走廊</ElButton>
-    <ElButton class="mb-4" type="primary" @click="drawRectangle">画管道</ElButton>
+    <ElButton class="mb-4" type="primary" @click="drawCylinder">画圆柱</ElButton>
+    <ElButton class="mb-4" type="primary" @click="drawCorridor">画走廊</ElButton>
+    <ElButton class="mb-4" type="primary" @click="drawPolylineVolume">画管道</ElButton>
     <div class="w-[100%] h-[100%]"></div>
     <div class="w-[100%] h-[100%]">
       <cesium-component

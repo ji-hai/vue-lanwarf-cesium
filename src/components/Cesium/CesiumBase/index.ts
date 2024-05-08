@@ -323,12 +323,6 @@ const transformWGS84ToCartographic = (position) => {
  */
 const getCatesian3FromPX = (viewer, px) => {
   if (viewer && px) {
-    // var picks = viewer.scene.drillPick(px); // 3dtilset
-    // for (var i = 0; i < picks.length; i++) {
-    //     if (picks[i] instanceof Cesium.Cesium3DTileFeature) { //模型上拾取
-    //         isOn3dtiles = true;
-    //     }
-    // }
     const picks = viewer.scene.pick(px)
     let cartesian = null
     let isOn3dtiles = false,
