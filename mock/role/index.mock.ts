@@ -261,7 +261,7 @@ const adminList = [
             component: 'views/Polygon/Water',
             meta: {
               title: '水面',
-              icon: 'uil:polygon'
+              icon: 'material-symbols-light:water'
             }
           }
         ]
@@ -291,7 +291,7 @@ const adminList = [
             component: 'views/SceneEffects/Screenshot',
             meta: {
               title: '场景截图',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'ri:screenshot-line'
             }
           },
           {
@@ -300,7 +300,7 @@ const adminList = [
             component: 'views/SceneEffects/GlobeRotate',
             meta: {
               title: '地球自转',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'material-symbols-light:globe'
             }
           },
           {
@@ -309,7 +309,7 @@ const adminList = [
             component: 'views/SceneEffects/EagleEye',
             meta: {
               title: '鹰眼地图',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'mdi:file-eye-outline'
             }
           },
           {
@@ -318,7 +318,7 @@ const adminList = [
             component: 'views/SceneEffects/3Dtiles',
             meta: {
               title: '3dtiles',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'mage:box-3d-scan'
             }
           },
           {
@@ -327,7 +327,7 @@ const adminList = [
             component: 'views/SceneEffects/CZML',
             meta: {
               title: 'czml',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'lets-icons:3d-box'
             }
           },
           {
@@ -336,7 +336,7 @@ const adminList = [
             component: 'views/SceneEffects/SubmergedAnalysis',
             meta: {
               title: '淹没分析',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'icon-park-solid:analysis'
             }
           },
           {
@@ -345,7 +345,7 @@ const adminList = [
             component: 'views/SceneEffects/VideoProjection',
             meta: {
               title: '视频投影',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'material-symbols:video-file-outline-sharp'
             }
           },
           {
@@ -354,7 +354,7 @@ const adminList = [
             component: 'views/SceneEffects/SubsurfaceModel',
             meta: {
               title: '地下模式',
-              icon: 'icon-park-outline:modify-two'
+              icon: 'tabler:box-model'
             }
           }
         ]
@@ -387,7 +387,7 @@ const adminList = [
         name: 'cesiumDraw',
         meta: {
           title: '绘制',
-          icon: 'mdi:plugin-outline'
+          icon: 'mdi:draw'
         },
         children: [
           {
@@ -396,7 +396,7 @@ const adminList = [
             component: 'views/CesiumDraw/DrawEntity',
             meta: {
               title: '绘制',
-              icon: 'icon-park-twotone:whirlwind'
+              icon: 'mdi:draw'
             }
           },
           {
@@ -405,7 +405,7 @@ const adminList = [
             component: 'views/CesiumDraw/TerrainClipPlan',
             meta: {
               title: '地形开挖',
-              icon: 'icon-park-twotone:whirlwind'
+              icon: 'pepicons-pencil:clipboard'
             }
           }
         ]

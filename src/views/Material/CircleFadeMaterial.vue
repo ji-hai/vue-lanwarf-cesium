@@ -43,7 +43,7 @@ const cesiumLoadCB = (viewer) => {
   //   }
   // })
 
-  viewer.flyTo(waveCircle)
+  viewer.zoomTo(waveCircle)
 }
 </script>
 

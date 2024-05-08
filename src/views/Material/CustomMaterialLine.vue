@@ -37,7 +37,7 @@ const cesiumLoadCB = (viewer) => {
     }
   })
 
-  viewer.flyTo(glowingLine)
+  viewer.zoomTo(glowingLine)
 
   // viewer.entities.add({
   //   polyline: {
@@ -87,21 +87,21 @@ const cesiumLoadCB = (viewer) => {
   //   }
   // })
 
-  viewer.entities.add({
-    wall: {
-      positions: Cesium.Cartesian3.fromDegreesArray([
-        120.0, 30.0, 121.0, 30.0, 120.0, 31.0, 121.0, 31.0
-      ]),
-      minimumHeights: [12000, 12000, 12000, 12000],
-      maximumHeights: [50, 50, 50, 50],
-      material: new DynamicWallMaterialProperty({
-        viewer: viewer,
-        image: '/src/assets/image/colors.png',
-        color: Cesium.Color.RED,
-        duration: 18000
-      })
-    }
-  })
+  // viewer.entities.add({
+  //   wall: {
+  //     positions: Cesium.Cartesian3.fromDegreesArray([
+  //       120.0, 30.0, 121.0, 30.0, 120.0, 31.0, 121.0, 31.0
+  //     ]),
+  //     minimumHeights: [12000, 12000, 12000, 12000],
+  //     maximumHeights: [50, 50, 50, 50],
+  //     material: new DynamicWallMaterialProperty({
+  //       viewer: viewer,
+  //       image: '/src/assets/image/colors.png',
+  //       color: Cesium.Color.RED,
+  //       duration: 18000
+  //     })
+  //   }
+  // })
 }
 </script>
 
