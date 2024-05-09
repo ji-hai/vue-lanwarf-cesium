@@ -7,8 +7,6 @@ import { onMounted, markRaw, onBeforeUnmount } from 'vue'
 import * as Cesium from 'cesium'
 
 import { cesiumProps } from './props'
-import { setEventHandler } from '@/components/Cesium/CesiumEventHandler'
-import { vi } from '@faker-js/faker'
 
 const emit = defineEmits(['register'])
 
@@ -19,6 +17,8 @@ onMounted(() => {
   // 服务负载子域
   const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7']
   // Cesium.Ion.defaultAccessToken = props.cesiumAsset;
+  // Cesium.Ion.defaultAccessToken =
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxNGQ2MjhmMC0xODkzLTQ4MjMtODIxZi1iOTE1M2NhOWQxOGUiLCJpZCI6MTMyNzIwLCJpYXQiOjE2ODA5NDEwOTh9.rLP-HzxFfCPja-7UWE45ZFYS_cHByWT3B-cwRxCvjIg'
 
   viewer = new Cesium.Viewer(
     'cesiumContainer',

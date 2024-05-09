@@ -348,7 +348,7 @@ class CesiumGraphics {
     if (options) {
       const entity = this.createGraphics({})
       // $this = this
-      entity.cylinder = this.getCylinderGraphics({})
+      entity.cylinder = this.getCylinderGraphics(options)
       entity.position = options.position
       //   new Cesium.CallbackProperty(function () {
       //   const positions = entity.position.getValue($this._viewer.clock.currentTime)

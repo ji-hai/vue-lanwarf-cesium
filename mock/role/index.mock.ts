@@ -11,7 +11,7 @@ const adminList = [
     name: 'doc',
     meta: {
       title: 'doc',
-      icon: 'carbon:test-tool'
+      icon: 'mingcute:doc-line'
     },
     children: [
       {
@@ -20,7 +20,7 @@ const adminList = [
         component: 'views/Doc/index',
         meta: {
           title: '帮助文档',
-          icon: 'carbon:test-tool'
+          icon: 'mingcute:doc-line'
         }
       }
     ]
@@ -509,6 +509,36 @@ const adminList = [
         component: 'views/CssAnimation/Spinners',
         meta: {
           title: '旋转动画',
+          icon: 'carbon:test-tool'
+        }
+      }
+    ]
+  },
+  {
+    path: '/demo',
+    component: '#',
+    redirect: '/demo/demo1',
+    name: 'demo',
+    meta: {
+      title: '演示例子',
+      icon: 'carbon:test-tool'
+    },
+    children: [
+      {
+        path: 'demo1',
+        name: 'demo1',
+        component: 'views/CesiumDemo/Demo1',
+        meta: {
+          title: '溯源演示',
+          icon: 'carbon:test-tool'
+        }
+      },
+      {
+        path: 'demo2',
+        name: 'demo2',
+        component: 'views/CesiumDemo/Demo2',
+        meta: {
+          title: '和平管网演示',
           icon: 'carbon:test-tool'
         }
       }
