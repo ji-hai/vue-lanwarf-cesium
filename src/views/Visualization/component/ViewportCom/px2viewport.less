@@ -1,0 +1,21 @@
+@charset "utf-8";
+ 
+// 默认设计稿的宽度(根据开发UI稿更改)
+@designWidth: 1920;
+
+// 默认设计稿的高度(根据开发UI稿更改)
+@designHeight: 1080;
+
+@divider: blue;
+
+.vw(@name, @px) {
+      @{name}: (@px / @designWidth) * 100vw;
+}
+
+.vh(@name, @px) {
+      @{name}: (@px / @designHeight) * 100vh;
+}
+
+.font(@px) {
+      font-size: (@px / @designWidth) * 100vw;
+}

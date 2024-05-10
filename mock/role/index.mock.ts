@@ -543,6 +543,24 @@ const adminList = [
         }
       }
     ]
+  },
+  {
+    path: '/autofit',
+    name: 'autofit',
+    component: 'views/Visualization/Autofit',
+    meta: {
+      title: 'scale大屏',
+      icon: 'carbon:test-tool'
+    }
+  },
+  {
+    path: '/viewPort',
+    name: 'viewPort',
+    component: 'views/Visualization/ViewPort',
+    meta: {
+      title: 'viewPort大屏',
+      icon: 'carbon:test-tool'
+    }
   }
 ]
 
