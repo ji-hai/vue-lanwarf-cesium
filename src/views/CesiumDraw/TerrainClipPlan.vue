@@ -46,7 +46,7 @@ const start = () => {
 <template>
   <ContentWrap title="地形开挖">
     <ElButton @click="start">开挖</ElButton>
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

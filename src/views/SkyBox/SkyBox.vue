@@ -73,7 +73,7 @@ const changeSkyBox = (type: number) => {
       break
     case 8:
       getMap().scene.postProcessStages.add(CesiumBase.setFogEffect())
-      break  
+      break
     default:
       break
   }
@@ -82,7 +82,7 @@ const changeSkyBox = (type: number) => {
 
 <template>
   <ContentWrap title="天空盒">
-    <div class="w-[100%] h-[50px]">
+    <div class="flex w-[100%] flex-wrap">
       <ElButton :type="BtnType === 1 ? 'primary' : ''" @click="changeSkyBox(1)">天空盒1</ElButton>
       <ElButton :type="BtnType === 2 ? 'primary' : ''" @click="changeSkyBox(2)">天空盒2</ElButton>
       <ElButton :type="BtnType === 3 ? 'primary' : ''" @click="changeSkyBox(3)">天空盒3</ElButton>
@@ -92,7 +92,7 @@ const changeSkyBox = (type: number) => {
       <ElButton :type="BtnType === 7 ? 'primary' : ''" @click="changeSkyBox(7)">雪天特效</ElButton>
       <ElButton :type="BtnType === 8 ? 'primary' : ''" @click="changeSkyBox(8)">雾天特效</ElButton>
     </div>
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

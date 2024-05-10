@@ -1,10 +1,11 @@
-export const data = [{
-   type: 'javaScript',
-   activeNames: [],
-   list: [
+export const data = [
+  {
+    type: 'javaScript',
+    activeNames: [],
+    list: [
       {
-         title: '递归求和',
-         code: `  递归求和
+        title: '递归求和',
+        code: `  递归求和
       let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       function fn(i){
         return i >= nums.length ? 0: nums[i] + fn(i + 1)
@@ -14,8 +15,8 @@ export const data = [{
     `
       },
       {
-         title: '加法运算法则',
-         code: `  加法运算法则
+        title: '加法运算法则',
+        code: `  加法运算法则
       1. 如果都是原始类型--有字符串直接拼接，没有字符串转为数字相加(含有NaN返回NaN)
       2. 如果是引用类型--调用valueof()--调用toString()--报错
     
@@ -33,8 +34,8 @@ export const data = [{
     `
       },
       {
-         title: '对象属性次序',
-         code: `  对象属性次序
+        title: '对象属性次序',
+        code: `  对象属性次序
       const obj = {
         'a': '1',
         'b': '2',
@@ -46,8 +47,8 @@ export const data = [{
     `
       },
       {
-         title: '找单身狗',
-         code: `  找单身狗
+        title: '找单身狗',
+        code: `  找单身狗
     nums 数组中包含1个或多个正整数
     其他数字都出现两次，只有一个数字只出现1次
     找出只出现1次的数字
@@ -63,8 +64,8 @@ export const data = [{
     `
       },
       {
-         title: '属性类型',
-         code: `  属性类型
+        title: '属性类型',
+        code: `  属性类型
     对象属性类型只能是字符串和symbol
     let a = {};
     b = { key: 'b'};
@@ -76,8 +77,8 @@ export const data = [{
     `
       },
       {
-         title: '分时函数',
-         code: `
+        title: '分时函数',
+        code: `
       const chunkArray = (array, process, count) => {
       let obj, t
       let start = function () {
@@ -111,8 +112,8 @@ export const data = [{
         `
       },
       {
-         title: '属性类型',
-         code: `  属性类型
+        title: '属性类型',
+        code: `  属性类型
     对象属性类型只能是字符串和symbol
     let a = {};
     b = { key: 'b'};
@@ -122,15 +123,16 @@ export const data = [{
     
     console.log(a[b]);
     `
-      },
-   ]
-}, {
-   type: 'html',
-   activeNames: [],
-   list: [
+      }
+    ]
+  },
+  {
+    type: 'html',
+    activeNames: [],
+    list: [
       {
-         title: '递归求和',
-         code: `  递归求和
+        title: '递归求和',
+        code: `  递归求和
       let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       function fn(i){
         return i >= nums.length ? 0: nums[i] + fn(i + 1)
@@ -138,6 +140,7 @@ export const data = [{
     
       console.log(fn(0));
     `
-      },
-   ]
-}]
+      }
+    ]
+  }
+]

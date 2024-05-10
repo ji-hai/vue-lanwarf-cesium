@@ -32,8 +32,8 @@ const cesiumLoadCB = (viewer) => {
 
   cesiumGraphics = new CesiumGraphics(viewer)
 
-    //  点
-    cesiumGraphics.createPointsGraphics({
+  //  点
+  cesiumGraphics.createPointsGraphics({
     positions: [
       Cesium.Cartesian3.fromDegrees(120.84, 30.15, 0),
       Cesium.Cartesian3.fromDegrees(120.85, 30.15, 0)
@@ -58,7 +58,7 @@ const cesiumLoadCB = (viewer) => {
 
 <template>
   <ContentWrap title="CustomDefBillboardGraphics">
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

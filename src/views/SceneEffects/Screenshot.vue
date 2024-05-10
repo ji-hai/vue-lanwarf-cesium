@@ -70,7 +70,7 @@ const cesiumLoadCB = (viewer) => {
 <template>
   <ContentWrap title="场景截图">
     <ElButton class="mb-4" type="primary" @click="saveToImage(getMap())">导出场景</ElButton>
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

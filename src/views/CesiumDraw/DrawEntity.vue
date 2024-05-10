@@ -90,8 +90,7 @@ const drawPolylineVolume = () => {
     <ElButton class="mb-4" type="primary" @click="drawCylinder">画圆柱</ElButton>
     <ElButton class="mb-4" type="primary" @click="drawCorridor">画走廊</ElButton>
     <ElButton class="mb-4" type="primary" @click="drawPolylineVolume">画管道</ElButton>
-    <div class="w-[100%] h-[100%]"></div>
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

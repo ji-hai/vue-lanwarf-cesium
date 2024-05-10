@@ -107,7 +107,7 @@ const cesiumLoadCB = (viewer) => {
 
 <template>
   <ContentWrap title="流动线条材质">
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

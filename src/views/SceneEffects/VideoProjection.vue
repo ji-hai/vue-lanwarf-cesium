@@ -67,7 +67,7 @@ const cesiumLoadCB = async (viewer) => {
     <source src="/src/assets/video/lc.mp4" type="video/mp4" />
   </video>
   <ContentWrap title="视频投影">
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

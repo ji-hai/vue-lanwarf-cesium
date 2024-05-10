@@ -212,13 +212,11 @@ const cesiumLoadCB = async (viewer) => {
 
 <template>
   <ContentWrap title="和平管网演示">
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{
           // homeButton: true
-          animation: false,
-          timeline: false
         }"
         tiandituTk="80cd3c8ae46ae32fa0ac19f6d739d310"
         :cesiumLoadCB="cesiumLoadCB"

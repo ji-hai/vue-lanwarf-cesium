@@ -55,7 +55,7 @@ const cesiumLoadCB = (viewer) => {
 
 <template>
   <ContentWrap title="ModelGraphics">
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

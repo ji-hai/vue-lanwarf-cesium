@@ -81,7 +81,7 @@ const clear = () => {
 <template>
   <ContentWrap title="淹没分析">
     <ElButton type="primary" @click="clear">清除</ElButton>
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

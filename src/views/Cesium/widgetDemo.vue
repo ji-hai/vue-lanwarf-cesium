@@ -92,7 +92,7 @@ const changeSkyBox = (type: number) => {
       <ElButton :type="BtnType === 7 ? 'primary' : ''" @click="changeSkyBox(7)">雪天特效</ElButton>
       <ElButton :type="BtnType === 8 ? 'primary' : ''" @click="changeSkyBox(8)">雾天特效</ElButton>
     </div>
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

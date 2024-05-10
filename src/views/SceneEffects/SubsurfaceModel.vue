@@ -42,7 +42,7 @@ const cesiumLoadCB = async (viewer) => {
 
 <template>
   <ContentWrap title="地下模式">
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{

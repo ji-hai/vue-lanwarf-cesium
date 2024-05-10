@@ -201,7 +201,7 @@ const animation = (viewer) => {
 
 <template>
   <ContentWrap title="Demo">
-    <div class="w-[100%] h-[100%]">
+    <div class="h-[calc(100vh-280px)]">
       <cesium-component
         @register="mapRegister"
         :config="{
