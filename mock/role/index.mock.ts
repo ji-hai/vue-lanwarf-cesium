@@ -53,6 +53,15 @@ const adminList = [
               title: '天空盒',
               icon: 'formkit:skype'
             }
+          },
+          {
+            path: 'cesiumNavigation',
+            name: 'cesiumNavigation',
+            component: 'views/CesiumNavigation/CesiumNavigation',
+            meta: {
+              title: '导航插件',
+              icon: 'material-symbols-light:assistant-navigation-rounded'
+            }
           }
         ]
       },
@@ -434,22 +443,22 @@ const adminList = [
     ]
   },
   {
-    path: '/navigator',
+    path: '/windowNavigator',
     component: '#',
-    redirect: '/navigator',
-    name: 'navigator',
+    redirect: '/windowNavigator',
+    name: 'windowNavigator',
     meta: {
-      title: 'navigator',
-      icon: 'iconoir:navigator-alt'
+      title: 'windowNavigator',
+      icon: 'material-symbols-light:window'
     },
     children: [
       {
-        path: 'navigator',
-        name: 'navigator',
+        path: 'windowNavigator',
+        name: 'windowNavigator',
         component: 'views/Navigator/Navigator',
         meta: {
           title: 'Navigator',
-          icon: 'iconoir:navigator-alt'
+          icon: 'material-symbols-light:window'
         }
       },
       {
@@ -467,7 +476,7 @@ const adminList = [
         component: 'views/SSE/sse',
         meta: {
           title: 'sse',
-          icon: 'octicon:file-code-24'
+          icon: 'icon-park-outline:internal-transmission'
         }
       }
     ]
@@ -509,7 +518,7 @@ const adminList = [
     name: 'cssAnimation',
     meta: {
       title: 'css动画',
-      icon: 'carbon:test-tool'
+      icon: 'fa6-solid:spinner'
     },
     children: [
       {
@@ -518,7 +527,7 @@ const adminList = [
         component: 'views/CssAnimation/Spinners',
         meta: {
           title: '旋转动画',
-          icon: 'carbon:test-tool'
+          icon: 'fa6-solid:spinner'
         }
       }
     ]
@@ -530,7 +539,7 @@ const adminList = [
     name: 'demo',
     meta: {
       title: '演示例子',
-      icon: 'carbon:test-tool'
+      icon: 'tdesign:play-demo'
     },
     children: [
       {
@@ -539,7 +548,7 @@ const adminList = [
         component: 'views/CesiumDemo/Demo1',
         meta: {
           title: '溯源演示',
-          icon: 'carbon:test-tool'
+          icon: 'mdi:source-branch-refresh'
         }
       },
       {
@@ -548,7 +557,7 @@ const adminList = [
         component: 'views/CesiumDemo/Demo2',
         meta: {
           title: '和平管网演示',
-          icon: 'carbon:test-tool'
+          icon: 'vscode-icons:file-type-pipeline'
         }
       }
     ]
@@ -559,7 +568,7 @@ const adminList = [
     component: 'views/Visualization/Autofit',
     meta: {
       title: 'scale大屏',
-      icon: 'carbon:test-tool'
+      icon: 'oui:full-screen'
     }
   },
   {
@@ -568,7 +577,7 @@ const adminList = [
     component: 'views/Visualization/ViewPort',
     meta: {
       title: 'viewPort大屏',
-      icon: 'carbon:test-tool'
+      icon: 'solar:full-screen-square-bold'
     }
   }
 ]
