@@ -460,6 +460,15 @@ const adminList = [
           title: 'codeView',
           icon: 'octicon:file-code-24'
         }
+      },
+      {
+        path: 'sse',
+        name: 'sse',
+        component: 'views/SSE/sse',
+        meta: {
+          title: 'sse',
+          icon: 'octicon:file-code-24'
+        }
       }
     ]
   },

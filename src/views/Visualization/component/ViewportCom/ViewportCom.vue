@@ -9,10 +9,7 @@ console.log(fitChartSize(100))
 
 </script>
 <style lang="less" scoped>
-@import './px2viewport.less';
 .viewport {
-  color: @divider;
-//   vw(height, 100);
   background-color: red;
 }
 </style>
